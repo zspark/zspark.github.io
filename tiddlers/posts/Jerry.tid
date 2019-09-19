@@ -1,6 +1,6 @@
 created: 20190827154006143
 creator: Jerry
-modified: 20190919173037187
+modified: 20190919173841563
 modifier: Jerry
 title: Jerry
 type: text/vnd.tiddlywiki
@@ -29,13 +29,15 @@ type: text/vnd.tiddlywiki
 * major (college) : Physics
 * major (now) : Computer Graphics 
 * language : C++ JS GLSL Java AS3 
-* personal web : www.zspark.net
+* personal web : http://www.zspark.me
 * Github : https://github.com/zSpark
 * E-Mail : z_Spark@163.com
 
 !! 参与过的项目
 
-* UI编辑器、2D粒子编辑器扩展开发；
+* CIM/3DGis智慧城市开发平台参与开发；
+* DUCK光线追踪个人项目；
+* UI编辑器、2D粒子编辑器框架设计与开发；
 * 《乐三消》独立开发；
 * 公司小游戏开发（祖玛、消灭星星）；
 * 《风中奇缘》项目快速开发；
