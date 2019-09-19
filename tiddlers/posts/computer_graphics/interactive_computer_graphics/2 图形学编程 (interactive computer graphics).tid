@@ -2,7 +2,7 @@ created: 20190818121911567
 creator: Jerry
 modified: 20190827151248376
 modifier: Jerry
-tags: _icg_  [[computer graphics]]
+tags: [[interactive computer graphics]]
 title: 2 图形学编程 (interactive computer graphics)
 type: text/vnd.tiddlywiki
 
@@ -10,7 +10,7 @@ type: text/vnd.tiddlywiki
 
 第二章围绕谢尔并斯基镂垫程序做了图形学宏观上的介绍。 
 
-<<list-links "[tag[_icg_]sort[title]]">>
+{{interactive computer graphics}}
 
 ! 绘制模式
 

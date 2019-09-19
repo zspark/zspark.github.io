@@ -2,11 +2,11 @@ created: 20190818124325199
 creator: Jerry
 modified: 20190919031848823
 modifier: Jerry
-tags: _icg_  [[computer graphics]]
+tags: [[interactive computer graphics]]
 title: 4 观察 (interactive computer graphics)
 type: text/vnd.tiddlywiki
 
-<<list-links "[tag[_icg_]sort[title]]">>
+{{interactive computer graphics}}
 
 >知识最大的敌人不是无知，而是错觉。 --- 斯蒂文·霍金（Stephen Hawking）
 

@@ -2,16 +2,13 @@ created: 20190818120819791
 creator: Jerry
 modified: 20190831052407651
 modifier: Jerry
-tags: _icg_  [[computer graphics]]
+tags: [[interactive computer graphics]]
 title: 1 图形系统和模型(interactive computer graphics)
 type: text/vnd.tiddlywiki
 
 <<.preamble "这是我复习Edward Angel与Dave Shreiner的合著《交互式计算机图形学 基于OpenGL着色器的自顶向下方法（第六版）》的笔记。经典教材需要经常阅读，加深记忆，修正理解，获取新知。">>
 
-
-<<list-links "[tag[_icg_]sort[title]]">>
-
-
+{{interactive computer graphics}}
 
 
 

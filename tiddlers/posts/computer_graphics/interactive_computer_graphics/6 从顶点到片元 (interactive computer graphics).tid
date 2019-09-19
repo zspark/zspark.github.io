@@ -2,11 +2,11 @@ created: 20190827164529747
 creator: Jerry
 modified: 20190827165437478
 modifier: Jerry
-tags: _icg_  [[computer graphics]]
+tags: [[interactive computer graphics]]
 title: 6 从顶点到片元 (interactive computer graphics)
 type: text/vnd.tiddlywiki
 
-<<list-links "[tag[_icg_]sort[title]]">>
+{{interactive computer graphics}}
 
 ! 从顶点到片元
 

@@ -2,12 +2,12 @@ created: 20190818124701561
 creator: Jerry
 modified: 20190827151248389
 modifier: Jerry
-tags: _icg_  [[computer graphics]]
+tags: [[interactive computer graphics]]
 title: 5 光照与明暗绘制 (interactive computer graphics)
 type: text/vnd.tiddlywiki
 
 
-<<list-links "[tag[_icg_]sort[title]]">>
+{{interactive computer graphics}}
 
 
 
