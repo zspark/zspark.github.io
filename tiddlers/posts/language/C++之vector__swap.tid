@@ -3,7 +3,7 @@ creator: Jerry
 icon: $:/core/images/cancel-button
 modified: 20190818140949486
 modifier: Jerry
-tags: [[computer science]] C++
+tags:  C++
 title: C++之vector::swap
 type: text/vnd.tiddlywiki
 
