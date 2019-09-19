@@ -1,6 +1,6 @@
 created: 20190818113411719
 creator: Jerry
-modified: 20190824144634636
+modified: 20190919160822867
 modifier: Jerry
 tags: [[computer science]] Philosophy
 title: My programming philosophy 2013 and before
@@ -21,5 +21,5 @@ type: text/vnd.tiddlywiki
 *封装一个功能可以有很多方法，比如用一个全新的数据结构去与这个功能模块交互，该模块不能与其他任何模块交互。但这也属于治标的方法，封装核心还是对外尽可能提供优质的、简明扼要的接口，从而自我封闭。
 *如果几个函数都使用同一个变量，那么我们至少有两种选择：1、将变量写成全局的形式；2、将变量作为参数传递；细细品味1、2种方法你就会发现，使用第一种确实能提高编写效率，但同样将该变量暴露给了更多的函数，倘若编写不慎可能会导致该全局变量在无意间被全新赋值；其次一个明显的问题就是我一向支持的编写方式，就是任何代码要给阅读者（包括以后阅读该代码的自己）一种尽可能简单、明确、清楚的引导（%red%明确引导%%:-)）。这种以全局变量写的方式明显没有以显示的给函数传递参数的方式更容易让读者明白“可能”会发生什么。比如int min（int，int）一看就能理解它是想返回两个参数中最小的。然而要是写成int  min()，或者int min(int)；你便会很郁闷它是试图在与谁或者哪些数字进行比较；
 
-[img[philosophy_laozi.jpg]]
 
+[img [https://raw.githubusercontent.com/zspark/assets/blog/philosophy/laozi.jpg]]

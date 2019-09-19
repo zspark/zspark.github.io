@@ -1,6 +1,6 @@
 created: 20190818114304148
 creator: Jerry
-modified: 20190818114712323
+modified: 20190919160910560
 modifier: Jerry
 tags: [[computer science]] Philosophy
 title: My programming philosophy 2014-2015
@@ -23,5 +23,4 @@ type: text/vnd.tiddlywiki
 * {-事件涉及的程序应该是异步的。-}这句话我不太同意，同步也有使用事件的必要，比如在发布订阅者模式中，模型变化后派发事件，订阅者得到事件后调整界面显示或者更新自己模块的数据都可以使用事件机制。
 * 起名依然还是准确并且精简的好，两个词：准确，精简；
 
-
-[img[philosophy_kongzi.jpg]]
+[img [https://raw.githubusercontent.com/zspark/assets/blog/philosophy/kongzi.jpg]]

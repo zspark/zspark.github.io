@@ -6,7 +6,7 @@ tags: _icg_ [[computer science]] [[computer graphics]]
 title: 2 图形学编程 (interactive computer graphics)
 type: text/vnd.tiddlywiki
 
-[img[image-cg2-3.jpg]]
+[img[https://raw.githubusercontent.com/zspark/assets/blog/opengl/icg/cg2_3.jpg]]
 
 第二章围绕谢尔并斯基镂垫程序做了图形学宏观上的介绍。 
 
@@ -253,7 +253,7 @@ glLinkProgram(program);
 * 缺少glewExperimental = GL_TRUE;具体原因参考Google；
 
 
-[img[image-cg2-2.jpg]]
+[img[https://raw.githubusercontent.com/zspark/assets/blog/opengl/icg/cg2_2.jpg]]
 
 
 

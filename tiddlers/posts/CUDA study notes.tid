@@ -1,6 +1,6 @@
 created: 20190818072940858
 creator: Jerry
-modified: 20190827151042329
+modified: 20190919162039047
 modifier: Jerry
 tags: sidelight [[computer science]] CUDA
 title: CUDA study notes
@@ -93,7 +93,8 @@ cudaGraphicsResourceGetMappedPointer, cudaGraphicsSubResourceGetMappedArray, cud
 
 在同一个block中的线程通过共享存储器（shared memory）交换数据，并通过栅栏同步保证线程间能够正确地共享数据 
 
-[img[cuda_memory.jpg]]
+
+[img[https://raw.githubusercontent.com/zspark/assets/blog/cuda/memory.jpg]]
 
 Kernel函数实质上是以block为单位执行的，同一个block中的线程需要共享数据，因此它们必须在同一个SM中发射，而block中的每一个thread则被发射到一个SP上执行；一个block必须被分到同一个SM中，但是一个SM中同一时刻可以有多个活动线程块（active block）在等待执行
 
@@ -146,4 +147,4 @@ What Every CUDA Programmer Should Know About OpenGL
 
 More on the Pointers
 
-[img[more_on_the_pointers.jpg]]
+[img[https://raw.githubusercontent.com/zspark/assets/blog/opengl/more_on_the_pointers.jpg]]

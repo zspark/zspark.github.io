@@ -1,6 +1,6 @@
 created: 20190818112326010
 creator: psklf
-modified: 20190818113344483
+modified: 20190919163034321
 modifier: Jerry
 tags: excerpted OpenGL [[computer science]] [[computer graphics]]
 title: 图源重启
@@ -35,7 +35,7 @@ type: text/vnd.tiddlywiki
 
 举个例子：比如指定8爲重启的标志，遇到8就重启。上面的是不启用图元重启的情况，即通常的情况。下面的是启用图元重启的情况，我们可以看到，从9开始，又重新从头开始绘制Triangle strip了。 
 
-[img[drawing_a_lot_of_geometry_efficiently_1.jpg]]
+[img[https://raw.githubusercontent.com/zspark/assets/blog/opengl/drawing_a_lot_of_geometry_efficiently_1.jpg]]
 
 ! 编程指南
 
