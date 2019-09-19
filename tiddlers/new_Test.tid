@@ -1,0 +1,112 @@
+_canonical_uri: 
+background-color: #EAE57D
+color: #800040
+created: 20190823153358725
+creator: Jerry
+footer: The title of the tiddler containing the icon associated with a tiddler
+from-version: 5.1.25
+modified: 20190918085713759
+modifier: Jerry
+tags: 
+title: new/Test
+type: text/vnd.tiddlywiki
+
+
+```
+[img[https://raw.githubusercontent.com/zspark/blog/tiddlywiki_blog/images/img1.jpg]]
+```
+
+[img width=320 class="tc-image" [https://raw.githubusercontent.com/zspark/blog/tiddlywiki_blog/images/img1.jpg]]
+
+---
+
+@@.note
+''Tip:'' You can actually try it out right here in this wiki.<br>
+Open: {{$:/core/ui/Buttons/control-panel}} ''~ControlPanel'' > ''Plugins'' > ''Get more plugins'' > ''Open plugin library''
+@@
+
+---
+
+<<thumbnail-right link:"Introduction Video" image:"Introduction Video Thumbnail.jpg" caption:"Introduction to ~TiddlyWiki" icon:"{{$:/core/images/video}}" color:"red">>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+
+---
+
+;to
+: The title of the target tiddler of the link, with no escaping
+
+;term
+:giensmengiat asignem ag genaa a aa
+: gniensige
+:sgniesnie
+
+
+See also <<.vlink tv-wikilink-template>>. If both that variable and this one exist, this one dominates.
+
+---
+
+\define sayhi(name:"Bugs Bunny" address:"Rabbit Hole Hill")
+Hi, I'm $name$ and I live in $address$.
+\end
+
+<<.tab "Don't attempt to use the browser ''File''/''Save'' menu option to save changes (it doesn't work)">>
+
+<<.sidebar-tab "Don't attempt to use the browser ''File''/''Save'' menu option to save changes (it doesn't work)">>
+
+<<.more-tab "Don't attempt to use the browser ''File''/''Save'' menu option to save changes (it doesn't work)">>
+
+<<.warning "Don't attempt to use the browser ''File''/''Save'' menu option to save changes (it doesn't work)">>
+
+<<.tip "Don't attempt to use the browser ''File''/''Save'' menu option to save changes (it doesn't work)">>
+
+<<.key "Don't attempt to use the browser ''File''/''Save'' menu option to save changes (it doesn't work)">>
+
+<<.note "Don't attempt to use the browser ''File''/''Save'' menu option to save changes (it doesn't work)">>
+
+<<.preamble "Don't attempt to use the browser ''File''/''Save'' menu option to save changes (it doesn't work) Don't attempt to use the browser ''File''/''Save'' menu option to save changes (it doesn't work) Don't attempt to use the browser ''File''/''Save'' menu option to save changes (it doesn't work) Don't attempt to use the browser ''File''/''Save'' menu option to save changes (it doesn't work)">>
+
+---
+
+<div style="font-size:0.7em;text-align:center;margin:3em auto;">
+<a href="http://groups.google.com/group/TiddlyWiki" class="tc-btn-big-green" style="border-radius:4px;background-color:#FF8C19;" target="_blank" rel="noopener noreferrer">
+{{$:/core/images/help}} Forum
+</a>
+<a href="https://www.youtube.com/c/JeremyRuston" class="tc-btn-big-green" style="border-radius:4px;background-color:#e52d27;" target="_blank" rel="noopener noreferrer">
+{{$:/core/images/video}} ~YouTube
+</a>
+<a href="https://twitter.com/TiddlyWiki" class="tc-btn-big-green" style="border-radius:4px;background-color:#5E9FCA;" target="_blank" rel="noopener noreferrer">
+{{$:/core/images/twitter}} Twitter
+</a>
+<a href="https://github.com/Jermolene/TiddlyWiki5" class="tc-btn-big-green" style="border-radius:4px;background-color:#444;" target="_blank" rel="noopener noreferrer">
+{{$:/core/images/github}} ~GitHub
+</a>
+<a href="https://gitter.im/TiddlyWiki/public" class="tc-btn-big-green" style="border-radius:4px;background-color:#753a88;background-image:linear-gradient(to left,#cc2b5e,#753a88);" target="_blank" rel="noopener noreferrer">
+{{$:/core/images/gitter}} Gitter
+</a>
+</div>
+
+----
+
+```
+<style>
+.my-gallery svg {
+width: 6em;
+height: 6em;
+margin: 1em;
+}
+</style>
+<div class="my-gallery">
+<$list filter="[all[tiddlers+shadows]tag[$:/tags/Image]]">
+<span title=<<currentTiddler>>>
+<$transclude/>
+</span>
+</$list>
+</div>
+```
+----
+
+<img alt="10" src="http://www.sssloan.com/wp-content/uploads/2016/04/SSS-Abroad.jpg">
+
+[[https://threejs.org/examples/#webgl_animation_cloth]]
+

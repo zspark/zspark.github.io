@@ -1,0 +1,11 @@
+created: 20190824143034534
+creator: Jerry
+icon: $:/core/images/home-button
+modified: 20190910054507117
+modifier: Jerry
+title: Jerry Chaos's Notes
+type: text/vnd.tiddlywiki
+
+<<list-links "[tag[computer science]sort[title]]">>
+
+<div class="tb5-fish">{{$:/.img/fish.svg}}</div>

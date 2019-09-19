@@ -1,0 +1,30 @@
+created: 20190917014115002
+creator: Jerry
+modified: 20190917015912057
+modifier: Jerry
+tags: [[OpenGL API]]
+title: glCreateBuffers
+type: text/vnd.tiddlywiki
+
+glCreateBuffers — create buffer objects
+
+```cpp
+void glCreateBuffers(GLsizei n,GLuint *buffers);
+```
+
+!!Parameters
+
+;n
+:Specifies the number of buffer objects to create. 
+
+;buffers
+:Specifies an array in which names of the new buffer objects are stored. 
+
+
+{{glGenXXX vs glCreateXXX}}
+
+!!Version Support
+
+|Function / Feature Name| OpenGL Version |<|<|<|<|<|<|<|<|<|<|<|
+|~|2.0|2.1|3.0|3.1|3.2|3.3|4.0|4.1|4.2|4.3|4.4|4.5|
+|glCreateBuffers| - | - | - | - | - | - | - | - | - | - | - |✔|

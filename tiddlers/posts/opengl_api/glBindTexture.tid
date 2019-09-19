@@ -1,0 +1,33 @@
+created: 20190918140235009
+creator: Jerry
+modified: 20190918141822193
+modifier: Jerry
+tags: [[OpenGL API]]
+title: glBindTexture
+type: text/vnd.tiddlywiki
+
+glBindTexture — bind a named texture to a texturing target
+
+```cpp
+void glBindTexture(GLenum target,GLuint texture);
+```
+
+!!Parameters
+
+;  target 
+:Specifies the target to which the texture is bound. Must be one of :
+{{opengl texture binding target}}
+
+; texture 
+:Specifies the name of a texture. 
+
+!!notice
+*When a texture is first bound, it assumes the specified target: A texture first bound to ''GL_TEXTURE_1D ''becomes one-dimensional texture, and so the others.
+
+<<.warning "''GL_INVALID_OPERATION ''is generated if texture was previously created with a target that doesn't match that of target. ">>
+
+!!Version Support
+
+|Function / Feature Name| OpenGL Version |<|<|<|<|<|<|<|<|<|<|<|
+|~|2.0|2.1|3.0|3.1|3.2|3.3|4.0|4.1|4.2|4.3|4.4|4.5|
+|glBindTexture|✔|✔|✔|✔|✔|✔|✔|✔|✔|✔|✔|✔|

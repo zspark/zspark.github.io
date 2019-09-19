@@ -1,0 +1,15 @@
+color: #dc0000
+created: 20190827135408580
+creator: Jerry
+icon: $:/images/fa5/solid/feather-alt
+modified: 20190827144745951
+modifier: Jerry
+tags: _toc_
+title: thinking
+type: text/vnd.tiddlywiki
+
+
+这是我在生活与工作中的一些思考，天马行空并无章法。
+
+
+<<list-links "[tag[thinking]sort[title]]">>

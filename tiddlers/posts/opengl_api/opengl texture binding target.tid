@@ -1,0 +1,20 @@
+created: 20190918140747870
+creator: Jerry
+modified: 20190918141003036
+modifier: Jerry
+tags: __opengl_func_text_common__
+title: opengl texture binding target
+type: text/vnd.tiddlywiki
+
+|texture binding target|description|h
+|GL_TEXTURE_1D||
+|GL_TEXTURE_2D||
+|GL_TEXTURE_3D||
+|GL_TEXTURE_1D_ARRAY||
+|GL_TEXTURE_2D_ARRAY||
+|GL_TEXTURE_RECTANGLE||
+|GL_TEXTURE_CUBE_MAP||
+|GL_TEXTURE_CUBE_MAP_ARRAY||
+|GL_TEXTURE_BUFFER||
+|GL_TEXTURE_2D_MULTISAMPLE||
+|GL_TEXTURE_2D_MULTISAMPLE_ARRAY||

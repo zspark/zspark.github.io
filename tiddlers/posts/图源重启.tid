@@ -1,0 +1,83 @@
+created: 20190818112326010
+creator: psklf
+modified: 20190818113344483
+modifier: Jerry
+tags: excerpted OpenGL [[computer science]] [[computer graphics]]
+title: 图源重启
+type: text/vnd.tiddlywiki
+
+|作者|psklf|
+|出处| http://www.cnblogs.com/psklf/p/5750783.html|
+
+! 背景概述
+
+在OpenGL绘制图形时，可能需要绘制多个并不相连的图形。这样的情况下这几个图形没法被当做一个图形来处理。也就需要多次调用 DrawArrays 或 DrawElements. 如果图形很多，可能会需要用一个循环来调用：
+
+
+```
+ for (int i = 0; i < num_objects; i++) {
+    glDrawArrays(GL_TRIANGLES,
+                object[n]->first_vertex,
+                object[n]->vertex_count);
+ }
+```
+
+
+每一次调用OpenGL 的绘制函数，都需要一定的资源开销，如果每一帧调用太多次，会对程序的性能产生较大的影响。提高性能的办法就是调用一次绘制函数，画出分散的图形。
+
+一种方法是使用 glMultiDrawElements 函数来代替旧的绘制函数，可以减少调用次数，仅需调用此函数一次即可。但是这个函数在OpenGL ES 没有得到支持。而且使用这个函数，仍然需要将每一个分散的图形维护一组单独的顶点坐标/纹理坐标，这个是免不了的，这些数据仍然需要分开上传，还是会消耗一定的资源。针对这种情况使用图元重启会更加合适。
+
+! 图元重启介绍
+
+考虑通常的情况，当用户绘制 GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_LINE_STRIP, GL_LINE_LOOP 这些图元时，所有的绘制点按照特定的顺序被连起来，以形成一个最终的复杂图形，也就是说最终的复杂图形由多个相连的三角形或线段组成。像上面提到的情况，想要绘制分散的图形，应该怎么办？
+
+图元重启(Primitive restart) 允许用户绘制不连续的、分散的图形。考虑使用 glDrawElements 函数，绘制时按照indices所指定的顶点的顺序来绘制的。此时可以指定某一个值，该值表示一个重启的标志。遇到这个值的时候，OpenGL不会绘制图元，而是结束上一段绘制，然后重新启动新的绘制，也就是說用后面的索引所指定的顶点来从头绘制一个图形。
+
+举个例子：比如指定8爲重启的标志，遇到8就重启。上面的是不启用图元重启的情况，即通常的情况。下面的是启用图元重启的情况，我们可以看到，从9开始，又重新从头开始绘制Triangle strip了。 
+
+[img[drawing_a_lot_of_geometry_efficiently_1.jpg]]
+
+! 编程指南
+
+指定重启位置的数值，在桌面版的OpenGL是可以自行设定的，glPrimitiveRestartIndex? 函数指定重启的标志。在OpenGL ES 无法自行指定，只能用给定的值。
+
+首先设置启用图元重启
+
+
+```
+ glEnable(GL_PRIMITIVE_RESTART_FIXED_INDEX);
+```
+
+
+Fixed index就代表了使用固定的重启的标志，具体数值和indices内数据类型有关。glDrawElements 的indices参数类型必须是以下的一种：GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, GL_UNSIGNED_INT. 那么分别对应的重启的标志就是 2^8 - 1;2^16 - 1;2^32 - 1;也就是說重启的标志的数值就是indices数组所能允许的最大值。这个值一般来说是不会被用到的，拿来当标志正好。
+
+所以我们只需要在 indices 里面的合适的位置插入一个标志，然后再调用 glDrawElements 函数即可实现图元重启。 下面代码片段是一个具体的例子：
+
+
+```
+ // Prepare index buffer data (not shown: vertex buffer data, loading vertex and index buffers)
+ GLushort indexData[11] = {
+    0, 1, 2, 3, 4,    // triangle strip ABCDE
+    0xFFFF,           // primitive restart index (largest possible GLushort value)
+    5, 6, 7, 8, 9,    // triangle strip FGHIJ
+ };
+
+ // Draw triangle strips
+ glEnable(GL_PRIMITIVE_RESTART_FIXED_INDEX);
+
+ glDrawElements(GL_TRIANGLE_STRIP, 11, GL_UNSIGNED_SHORT, 0);
+```
+
+
+另外，如果 glDrawElements 的mode是points之类的，那么用不用图元重启其实是一样的，对于性能没有提高。
+
+!! 参考资料：
+
+
+[[rimitive Restart Makes GPGPU Tech Sparkle|http://www.scientificcomputing.com/article/2011/06/primitive-restart-makes-gpgpu-tech-sparkle|rimitive Restart Makes GPGPU Tech Sparkle]]
+
+[[Combining Drawing Functions, Combining Geometry Using Primitive|http://programming4.us/multimedia/8302.aspx|Combining Drawing Functions, Combining Geometry Using Primitive]]
+
+[[TechniquesforWorkingwithVertexData|https://developer.apple.com/library/content/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html|TechniquesforWorkingwithVertexData]]
+
+¶ 

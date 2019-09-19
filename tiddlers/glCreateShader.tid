@@ -1,0 +1,28 @@
+created: 20190919033020263
+creator: Jerry
+modified: 20190919033412140
+modifier: Jerry
+tags: [[OpenGL API]]
+title: glCreateShader
+type: text/vnd.tiddlywiki
+
+glCreateShader — Creates a shader object
+
+```cpp
+GLuint glCreateShader(GLenum shaderType);
+```
+
+!!Parameters
+
+;  shaderType 
+: Specifies the type of shader to be created. Must be one of ''GL_COMPUTE_SHADER'', ''GL_VERTEX_SHADER'', ''GL_TESS_CONTROL_SHADER'', ''GL_TESS_EVALUATION_SHADER'', ''GL_GEOMETRY_SHADER'', or ''GL_FRAGMENT_SHADER''.
+
+<<.warning "计算shader不属于OpenGL流水管线的一部分">>
+
+
+
+!!Version Support
+
+|Function / Feature Name| OpenGL Version |<|<|<|<|<|<|<|<|<|<|<|
+|~|2.0|2.1|3.0|3.1|3.2|3.3|4.0|4.1|4.2|4.3|4.4|4.5|
+|glCreateShader|✔|✔|✔|✔|✔|✔|✔|✔|✔|✔|✔|✔|

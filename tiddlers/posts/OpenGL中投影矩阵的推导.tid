@@ -1,0 +1,14 @@
+created: 20190818083412583
+creator: Jerry
+modified: 20190919025633158
+modifier: Jerry
+tags: [[computer graphics]] OpenGL Math
+title: OpenGL中投影矩阵的推导
+type: text/vnd.tiddlywiki
+
+这里仅坐投影矩阵的推导，不做OpenGL流水线其他部分的说明，文中所说的空间指的是摄像机空间，顶点也是在该空间的定义的，其次还要说明的是以下推导是针对OpenGL投影矩阵的推导，而对于DX的话，由于其CVV与OpenGL略有不同，就不能完全使用这里推导的最终投影矩阵了，不过推导大相径庭。阅读本文需要了解CVV、MVP中的投影P矩阵、透视除法（perspective division），如果你了解或者熟悉才接模块的更好。
+
+具体内容参见：
+
+*[[OpenGL中的平行投影]]
+*[[OpenGL中的透视投影]]

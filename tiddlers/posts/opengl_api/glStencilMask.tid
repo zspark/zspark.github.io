@@ -1,0 +1,26 @@
+created: 20190912170915847
+creator: Jerry
+modified: 20190912171346237
+modifier: Jerry
+tags: [[OpenGL API]]
+title: glStencilMask
+type: text/vnd.tiddlywiki
+
+glStencilMask — control the front and back writing of individual bits in the stencil planes
+
+```cpp
+void glStencilMask(GLuint mask);
+```
+
+!!Parameters
+
+; mask 
+:Specifies a bit mask to enable and disable writing of individual bits in the stencil planes. Initially, the mask is all 1's. 
+
+
+
+!!Version Support
+
+|Function / Feature Name| OpenGL Version |<|<|<|<|<|<|<|<|<|<|<|
+|~|2.0|2.1|3.0|3.1|3.2|3.3|4.0|4.1|4.2|4.3|4.4|4.5|
+|glStencilMask|✔|✔|✔|✔|✔|✔|✔|✔|✔|✔|✔|✔|

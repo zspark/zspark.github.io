@@ -1,0 +1,107 @@
+created: 20190818111649816
+creator: Jerry
+modified: 20190827182351385
+modifier: Jerry
+tags: excerpted [[computer science]] C++
+title: 仿函数
+type: text/vnd.tiddlywiki
+
+本文来自网络，原文地址：http://www.cnblogs.com/decade-dnbc66/p/5347088.html
+
+内容整理自国外C++教材
+
+>先考虑一个简单的例子：假设有一个vector< string>，你的任务是统计长度小于5的string的个数，如果使用count_if函数的话，你的代码可能长成这样：
+
+
+```cpp
+bool LengthIsLessThanFive(const string& str) {
+ return str.length()<5;    
+}
+int res=count_if(vec.begin(), vec.end(), LengthIsLessThanFive);
+//其中count_if函数的第三个参数是一个函数指针，返回一个bool类型的值。一般的，如果需要将特定的阈值长度也传入的话，我们可能将函数写成这样：
+
+bool LenthIsLessThan(const string& str, int len) {
+ return str.length()<len;
+}
+```
+
+
+      这个函数看起来比前面一个版本更具有一般性，但是他不能满足count_if函数的参数要求：count_if要求的是unary function（仅带有一个参数）作为它的最后一个参数。所以问题来了，怎么样找到以上两个函数的一个折中的解决方案呢？这个问题其实可以归结于一个data flow的问题，要设计这样一个函数，使其能够access这个特定的length值，回顾我们已有的知识，有三种解决方案可以考虑：
+
+*函数的局部变量；局部变量不能在函数调用中传递，而且caller无法访问。
+*函数的参数；这种方法我们已经讨论过了，多个参数不适用于count_if函数。
+*全局变量；我们可以将长度阈值设置成一个全局变量，代码可能像这样： 
+
+
+```cpp
+int maxLength;
+bool LengthIsLessThan(const string& str) {
+ return str.length()<maxLength;
+}
+int res=count_if(vec.begiin(), vec.end(), LengthIsLessThan);
+```
+
+
+      这段代码看似很不错，实则不符合规范，刚重要的是，它不优雅。原因有以下几点要考虑：
+
+    容易出错；为什么这么说呢，我们必须先初始化maxLength的值，才能继续接下来的工作，如果我们忘了，则可能无法得到正确答案。此外，变量maxLength和函数LengthIsLessThan之间是没有必然联系的，编译器无法确定在调用该函数前是否将变量初始化，给码农平添负担。
+    没有可扩展性；如果我们每遇到一个类似的问题就新建一个全局变量，尤其是多人合作写代码时，很容易引起命名空间污染（namespace polution）的问题；当范围域内有多个变量时，我们用到的可能不是我们想要的那个。
+    局变量的问题；每当新建一个全局变量，即使是为了coding的便利，我们也要知道我们应该尽可能的少使用全局变量，因为它的cost很高；而且可能暗示你这里有一些待解决的优化方案。 
+
+      说了这么多，还是要回到我们原始的那个问题，有什么解决方案呢？答案当然就是这篇blog的正题部分：仿函数。我们的初衷是想设计一个unary function，使其能做binary function的工作，这看起来并不容易，但是仿函数能解决这个问题。先来看仿函数的通俗定义：仿函数（functor）又称为函数对象（function object）是一个能行使函数功能的类。仿函数的语法几乎和我们普通的函数调用一样，不过作为仿函数的类，都必须重载operator()运算符，举个例子：
+
+
+```cpp
+class Func{
+ public:
+  void operator() (const string& str) const {
+   cout<<str<<endl;
+  }
+};
+
+Func myFunc;
+myFunc("helloworld!");
+
+//>>>helloworld!
+```
+
+
+仿函数其实是上述解决方案中的第四种方案：成员变量。成员函数可以很自然的访问成员变量： 　　
+
+
+```cpp
+class StringAppend{
+public:
+ explicit StringAppend(const string& str) : ss(str){}
+ void operator() (const string& str) const{
+  cout<<str<<' '<<ss<<endl;
+ }
+
+private:
+ const string ss;  
+};
+
+StringAppend myFunc("is world");
+myFunc("hello");
+
+//>>>hellois world
+```
+
+
+      我相信这个例子能让你体会到一点点仿函数的作用了；它既能想普通函数一样传入给定数量的参数，还能存储或者处理更多我们需要的有用信息。让我们回到count_if的问题中去，是不是觉得问题变得豁然开朗了？
+
+
+```cpp
+class ShorterThan {
+public:
+ explicit ShorterThan(int maxLength) : length(maxLength) {}
+ bool operator() (const string& str) const {
+  return str.length() < length;
+ }
+private:
+ const int length;
+};
+
+count_if(myVector.begin(), myVector.end(), ShorterThan(length));//直接调用即可
+```
+      这里需要注意的是，不要纠结于语法问题：ShorterThan(length)似乎并没有调用operator()函数？其实它调用了，创建了一个临时对象。你也可以自己加一些输出语句看一看。这篇博文就先记到这里了，仿函数也在STL中大量涉及到，不彻底弄懂仿函数的问题看到STL源码就会一头包。后续可能再分享一些关于functor的资料和个人学习心得。

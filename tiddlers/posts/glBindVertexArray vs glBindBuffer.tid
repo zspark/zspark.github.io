@@ -1,0 +1,165 @@
+created: 20190818102044473
+creator: Jerry
+modified: 20190917122756762
+modifier: Jerry
+tags: excerpted OpenGL
+title: glBindVertexArray vs glBindBuffer
+type: text/vnd.tiddlywiki
+
+
+!What is the role of [[glBindVertexArray]] vs [[glBindBuffer]] and what is their relationship?
+
+[[original URL|https://stackoverflow.com/questions/21652546/what-is-the-role-of-glbindvertexarrays-vs-glbindbuffer-and-what-is-their-relatio?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa%%]]
+
+From a low-level perspective, you can think of an array as having two parts to it:
+
+* Information about the size, shape, and type of the array (e.g., 32-bit floating point numbers, containing rows of vectors with four elements each).
+* The array data, which is little more than a big blob of bytes. 
+
+Even though the low-level concept has mostly stayed the same, the way you specify arrays has changed several times over the years.
+
+!! OpenGL 3.0 / ARB_vertex_array_object
+
+This is the way you probably should be doing things today. It is very rare to find people who can't run OpenGL 3.x and yet still have money to spend on your software.
+
+A buffer object in OpenGL is a big blob of bits. Think of the "active" buffer as just a global variable, and there are a bunch of functions which use the active buffer instead of using a parameter. These global state variables are the ugly side of OpenGL (prior to direct state access, which is covered below). 
+
+
+```
+GLuint buffer;
+
+// Generate a name for a new buffer.
+// e.g. buffer = 2
+glGenBuffers(1, &buffer);
+
+// Make the new buffer active, creating it if necessary.
+// Kind of like:
+// if (opengl->buffers[buffer] == null)
+//     opengl->buffers[buffer] = new Buffer()
+// opengl->current_array_buffer = opengl->buffers[buffer]
+glBindBuffer(GL_ARRAY_BUFFER, buffer);
+
+// Upload a bunch of data into the active array buffer
+// Kind of like:
+// opengl->current_array_buffer->data = new byte[sizeof(points)]
+// memcpy(opengl->current_array_buffer->data, points, sizeof(points))
+glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
+```
+Now, your typical vertex shader takes vertexes as input, not a big blob of bits. So you need to specify how the blob of bits (the buffer) is decoded into vertexes. That is the job of the array. Likewise, there is an "active" array which you can think of as just a global variable: 
+
+
+```
+GLuint array;
+// Generate a name for a new array.
+glGenVertexArrays(1, &array);
+// Make the new array active, creating it if necessary.
+glBindVertexArray(array);
+
+// Make the buffer the active array buffer.
+glBindBuffer(GL_ARRAY_BUFFER, buffer);
+// Attach the active buffer to the active array,
+// as an array of vectors with 4 floats each.
+// Kind of like:
+// opengl->current_vertex_array->attributes[attr] = {
+//     type = GL_FLOAT,
+//     size = 4,
+//     data = opengl->current_array_buffer
+// }
+glVertexAttribPointer(attr, 4, GL_FLOAT, GL_FALSE, 0, 0);
+// Enable the vertex attribute
+glEnableVertexAttribArray(attr);
+```
+
+!! OpenGL 2.0 (the old way)
+
+In OpenGL 2.x, there weren't vertex arrays and the data was just global. You still had to call glVertexAttribPointer() and glEnableVertexAttribArray(), but you had to call them every time that you used a buffer. In OpenGL 3.x, you just set up the array once.
+
+Going back to OpenGL 1.5, you could actually use buffers, but you used a separate function to bind each kind of data. For example, glVertexPointer() was for vertex data, and glNormalPointer() was for normal data. Prior to OpenGL 1.5, there weren't buffers, but you could use pointers into your application memory.
+
+!! OpenGL 4.3 / ARB_vertex_attrib_binding
+
+In 4.3, or if you have the ARB_vertex_attrib_binding extension, you can specify the attribute format and the attribute data separately. This is nice because it lets you easily switch one vertex array between different buffers. 
+
+```
+GLuint array;
+// Generate a name for a new array array.
+glGenVertexArrays(1, &array);
+// Make the new array active, creating it if necessary.
+glBindVertexArray(array);
+
+// Enable my attributes
+glEnableVertexAttribArray(loc_attrib);
+glEnableVertexAttribArray(normal_attrib);
+glEnableVertexAttribArray(texcoord_attrib);
+// Set up the formats for my attributes
+glVertexAttribFormat(loc_attrib,      3, GL_FLOAT, GL_FALSE, 0);
+glVertexAttribFormat(normal_attrib,   3, GL_FLOAT, GL_FALSE, 12);
+glVertexAttribFormat(texcoord_attrib, 2, GL_FLOAT, GL_FALSE, 24);
+// Make my attributes all use binding 0
+glVertexAttribBinding(loc_attrib,      0);
+glVertexAttribBinding(normal_attrib,   0);
+glVertexAttribBinding(texcoord_attrib, 0);
+
+// Quickly bind all attributes to use "buffer"
+// This replaces several calls to glVertexAttribPointer()
+// Note: you don't need to bind the buffer first!  Nice!
+glBindVertexBuffer(0, buffer, 0, 32);
+
+// Quickly bind all attributes to use "buffer2"
+glBindVertexBuffer(0, buffer2, 0, 32);
+```
+
+!! OpenGL 4.5 / ARB_direct_state_access
+
+In OpenGL 4.5, or if you have the ARB_direct_state_access extension, you no longer need to call [[glBindBuffer]]() or [[glBindVertexArray]]() just to set things up... you specify the arrays and buffers directly. You only need to bind the array at the end to draw it. 
+
+
+```
+GLuint array;
+// Generate a name for the array and create it.
+// Note that glGenVertexArrays() won't work here.
+glCreateVertexArrays(1, &array);
+// Instead of binding it, we pass it to the functions below.
+
+// Enable my attributes
+glEnableVertexArrayAttrib(array, loc_attrib);
+glEnableVertexArrayAttrib(array, normal_attrib);
+glEnableVertexArrayAttrib(array, texcoord_attrib);
+// Set up the formats for my attributes
+glVertexArrayAttribFormat(array, loc_attrib,      3, GL_FLOAT, GL_FALSE, 0);
+glVertexArrayAttribFormat(array, normal_attrib,   3, GL_FLOAT, GL_FALSE, 12);
+glVertexArrayAttribFormat(array, texcoord_attrib, 2, GL_FLOAT, GL_FALSE, 24);
+// Make my attributes all use binding 0
+glVertexArrayAttribBinding(array, loc_attrib,      0);
+glVertexArrayAttribBinding(array, normal_attrib,   0);
+glVertexArrayAttribBinding(array, texcoord_attrib, 0);
+
+// Quickly bind all attributes to use "buffer"
+glVertexArrayVertexBuffer(array, 0, buffer, 0, 32);
+
+// Quickly bind all attributes to use "buffer2"
+glVertexArrayVertexBuffer(array, 0, buffer2, 0, 32);
+
+// You still have to bind the array to draw.
+glBindVertexArray(array);
+glDrawArrays(...);
+```
+
+ARB_direct_state_access is nice for a lot of reasons. You can forget about binding arrays and buffers (except when you draw) so you don't have to think about hidden global variables that OpenGL is tracking for you. You can forget about the difference between "generating a name for an object" and "creating an object" because glCreateBuffer() and glCreateArray() do both at the same time.
+
+!! Vulkan
+
+Vulkan goes even farther and has you write code like the pseudocode I wrote above. So you'll see something like: 
+
+
+```
+// This defines part of a "vertex array", sort of
+VkVertexInputAttributeDescription attrib[3];
+attrib[0].location = 0; // Feed data into shader input #0
+attrib[0].binding = 0;  // Get data from buffer bound to slot #0
+attrib[0].format = VK_FORMAT_R32G32B32_SFLOAT;
+attrib[0].offset = 0;
+// repeat for attrib[1], attrib[2]
+```
+
+¶ 

@@ -1,0 +1,15 @@
+caption: Project
+created: 20190827151524381
+creator: Jerry
+list-after: TableOfContents
+modified: 20190827152006734
+modifier: Jerry
+tags: $:/tags/SideBar
+title: sidebar_Projects
+type: text/vnd.tiddlywiki
+
+<div class="tc-table-of-contents">
+
+<<toc-selective-expandable 'Project'>>
+
+</div>

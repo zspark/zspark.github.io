@@ -1,0 +1,32 @@
+created: 20190917015639262
+creator: Jerry
+modified: 20190917015901793
+modifier: Jerry
+tags: [[OpenGL API]]
+title: glGenBuffers
+type: text/vnd.tiddlywiki
+
+glGenBuffers — generate buffer object names
+
+```cpp
+void glGenBuffers(GLsizei n,GLuint * buffers);
+```
+
+!!Parameters
+
+;n
+:Specifies the number of buffer object names to be generated. 
+
+;buffers
+:Specifies an array in which the generated buffer object names are stored. 
+
+!!Description
+No buffer objects are associated with the returned buffer object names until they are first bound by calling glBindBuffer. 
+
+{{glGenXXX vs glCreateXXX}}
+
+!!Version Support
+
+|Function / Feature Name| OpenGL Version |<|<|<|<|<|<|<|<|<|<|<|
+|~|2.0|2.1|3.0|3.1|3.2|3.3|4.0|4.1|4.2|4.3|4.4|4.5|
+|glGenBuffers|✔|✔|✔|✔|✔|✔|✔|✔|✔|✔|✔|✔|

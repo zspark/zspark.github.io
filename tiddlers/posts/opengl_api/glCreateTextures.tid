@@ -1,0 +1,35 @@
+created: 20190918152647772
+creator: Jerry
+modified: 20190918152947302
+modifier: Jerry
+tags: [[OpenGL API]]
+title: glCreateTextures
+type: text/vnd.tiddlywiki
+
+glCreateTextures — create texture objects
+
+```cpp
+void glCreateTextures(GLenum target,GLsizei n,GLuint *textures);
+```
+
+!!Parameters
+
+;target
+:Specifies the effective texture target of each created texture. Must be one of the following:
+
+{{opengl texture binding target}}
+
+;n
+:Number of texture objects to create. 
+
+;textures
+:Specifies an array in which names of the new texture objects are stored. 
+
+
+{{glGenXXX vs glCreateXXX}}
+
+!!Version Support
+
+|Function / Feature Name| OpenGL Version |<|<|<|<|<|<|<|<|<|<|<|
+|~|2.0|2.1|3.0|3.1|3.2|3.3|4.0|4.1|4.2|4.3|4.4|4.5|
+|glCreateTextures| - | - | - | - | - | - | - | - | - | - | - |✔|

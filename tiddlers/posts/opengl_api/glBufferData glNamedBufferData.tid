@@ -1,0 +1,44 @@
+created: 20190918053320374
+creator: Jerry
+modified: 20190918053953196
+modifier: Jerry
+tags: [[OpenGL API]]
+title: glBufferData glNamedBufferData
+type: text/vnd.tiddlywiki
+
+glBufferData, glNamedBufferData — creates and initializes a buffer object's data store
+
+```cpp
+void glBufferData(GLenum target,GLsizeiptr size,const GLvoid * data,GLenum usage);
+void glNamedBufferData(GLuint buffer,GLsizei size,const void *data,GLenum usage);
+```
+
+!!Parameters
+
+;target
+:Specifies the target to which the buffer object is bound for glBufferData, which must be one of the buffer binding targets in the following table: 
+
+{{opengl binding point}}
+
+;buffer
+:Specifies the name of the buffer object for glNamedBufferData function.
+
+;size
+:Specifies the size in bytes of the buffer object's new data store.
+
+;data
+:Specifies a pointer to data that will be copied into the data store for initialization, or ''NULL'' if no data is to be copied.
+
+;usage
+:Specifies the expected usage pattern of the data store. The symbolic constant must be GL_STREAM_DRAW, GL_STREAM_READ, GL_STREAM_COPY, GL_STATIC_DRAW, GL_STATIC_READ, GL_STATIC_COPY, GL_DYNAMIC_DRAW, GL_DYNAMIC_READ, or GL_DYNAMIC_COPY.
+
+!!glBufferData vs glBufferStorage
+查看这里：[[glBufferStorage glNamedBufferStorage]]
+
+
+!!Version Support
+
+|Function / Feature Name| OpenGL Version |<|<|<|<|<|<|<|<|<|<|<|
+|~|2.0|2.1|3.0|3.1|3.2|3.3|4.0|4.1|4.2|4.3|4.4|4.5|
+|glBufferData|✔|✔|✔|✔|✔|✔|✔|✔|✔|✔|✔|✔|
+|glNamedBufferData| - | - | - | - | - | - | - | - | - | - | - |✔|
