@@ -1,11 +1,10 @@
 created: 20190818114723605
 creator: Jerry
-modified: 20190919161109003
+modified: 20190919195831923
 modifier: Jerry
-tags:  Philosophy
+tags: [[Philosophy and thoughts]]
 title: My programming philosophy 2016
 type: text/vnd.tiddlywiki
-
 
 * 变动一个方法的时候，可以给新方法添加一个‘怪异’的行为，以便能在逻辑中很直观的被察觉到。这样你就可以第一时间察觉到哪些旧有的逻辑还在被使用；
 * 内建类用来作为单例类创建时的唯一参数，这样就能客观保证不出第二个单例类实例；

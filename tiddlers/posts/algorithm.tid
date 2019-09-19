@@ -1,8 +1,11 @@
+color: #000000
 created: 20190827132821668
 creator: Jerry
 icon: $:/core/images/list
-modified: 20190827150834862
+modified: 20190919202324747
 modifier: Jerry
 tags: _toc_
 title: algorithm
 type: text/vnd.tiddlywiki
+
+<<list-links "[tag[algorithm]sort[title]]">>

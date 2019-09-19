@@ -1,10 +1,14 @@
 created: 20190919192529698
 creator: Jerry
-modified: 20190919192646751
+icon: $:/core/images/quote
+modified: 20190919203045680
 modifier: Jerry
 tags: 
 title: 关于该博客
 type: text/vnd.tiddlywiki
+
+<<.warning "博客正在整理中，刚从pmwiki转过来，一些语法、图片链接等都有变化">>
+
 
 这是一个普通的基于[[tiddlywiki|https://tiddlywiki.com]]的Blog，我希望自己能坚持记录下我在计算机科学中的学习与思考。
 

@@ -1,8 +1,8 @@
 created: 20190818115408332
 creator: Jerry
-modified: 20190919161350776
+modified: 20190919200040809
 modifier: Jerry
-tags:  Philosophy
+tags: [[Philosophy and thoughts]]
 title: My programming philosophy 2018
 type: text/vnd.tiddlywiki
 
@@ -16,7 +16,9 @@ type: text/vnd.tiddlywiki
 
       内存泄漏是指主观上，还是客观上的泄漏呢，还是两者都是？更或者有无如此的说法。下面是wiki的解释：
 
->In computer science, a memory leak is a type of resource leak that occurs when a computer program incorrectly manages memory allocations in such a way that memory which is no longer needed is not released. --- wiki
+<<<
+In computer science, a memory leak is a type of resource leak that occurs when a computer program incorrectly manages memory allocations in such a way that memory which is no longer needed is not released.
+<<<  --- wiki
 
 没有说主客观，显然就是两者都有。我这里将其分成主客观两种，主观上的内存泄漏是有申请与释放，但没有使用，这种情况很少，但就理论严密性而言探讨它是有必要的。比如我在main函数一开始申请了一片几个G的内存，直到main的return上一句才将其释放，期间没有被使用过；而客观上的内存泄漏就是只有申请没有释放，一是出于大意疏忽，二是怀抱“我就不释放”的心态，无论哪种，单就第三方阅读者而言都是没有释放。
 
