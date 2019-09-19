@@ -1,13 +1,12 @@
 created: 20190828113219195
 creator: Jerry
-modified: 20190919061206488
+modified: 20190919194439319
 modifier: Jerry
-tags: excerpted _mcintro_ [[computer graphics]] Math
+tags: [[monte carlo]]
 title: 1. 蒙特卡洛方法的快速介绍
 type: text/vnd.tiddlywiki
 
-
-{{_mcintro_}}
+{{monte carlo}}
 
 
 

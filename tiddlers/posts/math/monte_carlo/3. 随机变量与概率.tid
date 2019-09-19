@@ -1,20 +1,17 @@
 created: 20190828114206388
 creator: Jerry
-modified: 20190828120454841
+modified: 20190919194456626
 modifier: Jerry
-tags: _mcintro_ [[computer graphics]] Math
+tags: [[monte carlo]]
 title: 3. 随机变量与概率
 type: text/vnd.tiddlywiki
 
-
-原文链接：
-http://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/monte-carlo-methods-mathematical-foundations/random-variables-and-probability
+{{monte carlo}}
 
 本章译者：刘嘉鹏
 
 校验进行中：Jerry
 
-<<list-links "[tag[_mcintro_]sort[title]]">>
 
 
 

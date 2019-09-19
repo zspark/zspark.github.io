@@ -2,8 +2,10 @@ color: #9691fd
 created: 20190827135334829
 creator: Jerry
 icon: $:/images/fa5/solid/square-root-alt
-modified: 20190827161136723
+modified: 20190919194657624
 modifier: Jerry
 tags: _toc_
 title: Math
 type: text/vnd.tiddlywiki
+
+<<list-links "[tag[Math]sort[title]]">>

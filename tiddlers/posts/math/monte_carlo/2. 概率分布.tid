@@ -1,18 +1,15 @@
 created: 20190828115353972
 creator: Jerry
-modified: 20190828120446342
+modified: 20190919194448999
 modifier: Jerry
-tags: _mcintro_ [[computer graphics]] Math
+tags: [[monte carlo]]
 title: 2. 概率分布
 type: text/vnd.tiddlywiki
 
 
+{{monte carlo}}
 
-原文链接：
-http://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/monte-carlo-methods-mathematical-foundations/probability-distribution-part1
-
-<<list-links "[tag[_mcintro_]sort[title]]">>
-
+本章译者：Jerry
 
 !概率分布 
 
