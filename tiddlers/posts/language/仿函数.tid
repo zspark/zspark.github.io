@@ -1,8 +1,8 @@
 created: 20190818111649816
 creator: Jerry
-modified: 20190827182351385
+modified: 20190925143512089
 modifier: Jerry
-tags: excerpted  C++ language
+tags: excerpted C++ language
 title: 仿函数
 type: text/vnd.tiddlywiki
 
@@ -105,3 +105,112 @@ private:
 count_if(myVector.begin(), myVector.end(), ShorterThan(length));//直接调用即可
 ```
       这里需要注意的是，不要纠结于语法问题：ShorterThan(length)似乎并没有调用operator()函数？其实它调用了，创建了一个临时对象。你也可以自己加一些输出语句看一看。这篇博文就先记到这里了，仿函数也在STL中大量涉及到，不彻底弄懂仿函数的问题看到STL源码就会一头包。后续可能再分享一些关于functor的资料和个人学习心得。
+
+
+---
+以下摘自:https://my.oschina.net/llehs/blog/180594
+
+! 什么是仿函数（functor）
+
+    functor的英文解释为something that performs a function，即其行为类似函数的东西。C++中的仿函数是通过在类中重载()运算符实现，使你可以像使用函数一样来创建类的对象。
+仿函数（functor）的实现及使用
+
+```
+// this is a functor
+struct add_x {
+  add_x(int x) : x(x) {}
+  int operator()(int y) { return x + y; }
+private:
+  int x;
+};
+// usage:
+add_x add42(42); // create an instance of the functor class
+int i = add42(8); // and "call" it
+assert(i == 50); // and it added 42 to its argument
+std::vector<int> in; // assume this contains a bunch of values)
+std::vector<int> out;
+// Pass a functor to std::transform, which calls the functor on every element 
+// in the input sequence, and stores the result to the output sequence
+std::transform(in.begin(), in.end(), out.begin(), add_x(1)); 
+assert(out[i] == in[i] + 1); // for all i
+```
+
+! 为什么使用仿函数（functor）
+
+
+!! 迭代和计算逻辑分离
+
+    使用仿函数可以使迭代和计算分离开来。因而你的functor可以应用于不同场合，在STL的算法中就大量使用了functor，下面是STL中for_each中使用functor的示例：
+
+```
+struct sum
+{
+    sum(int * t):total(t){};
+    int * total;
+    void operator()(int element)
+    {
+       *total+=element;
+    }
+};
+int main()
+{
+    int total = 0;
+    sum s(&total);
+    int arr[] = {0, 1, 2, 3, 4, 5};
+    std::for_each(arr, arr+6, s);
+    cout << total << endl; // prints total = 15;
+}
+```
+
+!! 参数可设置
+
+    可以很容易通过给仿函数（functor）设置参数，来实现原本函数指针才能实现的功能，看下面代码：
+
+```
+class CalculateAverageOfPowers
+{
+public:
+    CalculateAverageOfPowers(float p) : acc(0), n(0), p(p) {}
+    void operator() (float x) { acc += pow(x, p); n++; }
+    float getAverage() const { return acc / n; }
+private:
+    float acc;
+    int   n;
+    float p;
+};
+```
+
+    这个仿函数的功能是求给定值平方或立方运算的平均值。只需要这样来声明一个对象即可：
+
+```
+CalculateAverageOfPowers my_cal(2);
+```
+
+!! 有状态
+
+    与普通函数另一个区别是仿函数（functor）是有状态的，所以可以进行诸如下面这种操作：
+
+```
+CalculateAverage avg;
+avg = std::for_each(dataA.begin(), dataA.end(), avg);
+avg = std::for_each(dataB.begin(), dataB.end(), avg);
+avg = std::for_each(dataC.begin(), dataC.end(), avg);
+```
+
+    对多个不同的数据集进行取平均。
+
+!! 性能
+
+    我们看一下2中写的代码：
+
+```
+std::transform(in.begin(), in.end(), out.begin(), add_x(1));
+```
+
+    编译器可以准确知道std::transform需要调用哪个函数（add_x::operator）。这意味着它可以内联这个函数调用。而如果使用函数指针，编译器不能直接确定指针指向的函数，而这必须在程序运行时才能得到并调用。
+
+    一个例子就是比较std::sort 和qsort ，STL的版本一般要快5-10倍。
+
+! 总结
+
+    当然，前3点都可以使用传统的函数和指针实现，但是用仿函数（functor）可以让这种实现变的更加简单。
