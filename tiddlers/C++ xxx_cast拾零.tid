@@ -1,5 +1,5 @@
 created: 20190925102348503
-modified: 20190925103050282
+modified: 20190929075518238
 tags: language C++
 title: C++ xxx_cast拾零
 type: text/vnd.tiddlywiki
@@ -42,4 +42,4 @@ int main()
     return 0;
 }
 ```
-you may copy this code and testing at [[here|http://www.dooccn.com/cpp/]]
+you may copy this code and test at [[here|http://www.dooccn.com/cpp/]]
