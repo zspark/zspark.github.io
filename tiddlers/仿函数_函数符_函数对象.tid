@@ -1,10 +1,20 @@
 created: 20190818111649816
 creator: Jerry
-modified: 20190925143512089
+modified: 20190930082530237
 modifier: Jerry
 tags: excerpted C++ language
-title: 仿函数
+title: 仿函数/函数符/函数对象
 type: text/vnd.tiddlywiki
+
+
+Jerry updated : 2019-09-30
+
+''functor的叫法：“函数符”、“函数对象"、"仿函数"''
+
+C++ primer plus 第六版将functor翻译为“函数符”、“函数对象” 16.5章节
+
+
+---
 
 本文来自网络，原文地址：http://www.cnblogs.com/decade-dnbc66/p/5347088.html
 
