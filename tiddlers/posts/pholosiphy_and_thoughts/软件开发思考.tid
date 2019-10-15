@@ -1,8 +1,8 @@
 created: 20190911141719146
 creator: Jerry
-modified: 20190912053742744
+modified: 20191015053815705
 modifier: Jerry
-tags:  [[Philosophy and thoughts]]
+tags: [[Philosophy and thoughts]]
 title: 软件开发思考
 type: text/vnd.tiddlywiki
 
@@ -46,7 +46,7 @@ type: text/vnd.tiddlywiki
 !管理
 
 !沟通（交流）
-沟通需要有效，程序开发中没有“心照不宣”这样的逻辑，这被成为“人类语言的鸿沟”
+沟通需要有效，程序开发中没有“心照不宣”这样的逻辑，这被称为“人类语言的鸿沟”，就是你的想法，我永远不可能完美感知，我们需要详细的沟通。
 
 ! 南京差旅总结
 
@@ -72,7 +72,7 @@ type: text/vnd.tiddlywiki
 
 * 资源管理：索引数据与标准件模型数据还需要由资源管理器整合；
 
-* 冗余递归/遍历：visible为false的图层依然有遍历，虽然在其中会应部分变量而退出，诸如此类的冗余循环，可在设置visible的第一时间决定是从map中移除或添加；
+* 冗余递归/遍历：visible为false的图层依然有遍历，虽然在其中会应部分变量而退出，诸如此类的冗余循环，可在设置visible的第一时间决定是从map中移除或添加，将业务的功能的变化设计在一次性的逻辑上，而非循环的逻辑上，保持循环逻辑与openGL状态机一样的顺溜，而非不停的判断检测；
 
 * 调试：RTree包围盒绘制为大家提供了基本的调试功能，但其开启关闭需要注释程序。
 
