@@ -1,0 +1,67 @@
+created: 20191114031311795
+modified: 20191114034301498
+tags: sensetime
+title: 2019-11-11_15
+type: text/vnd.tiddlywiki
+
+
+!星期四(14)
+
+!! 工作内容（未来一段时间）
+* Split `st3dlib` from `SDK_mobile` to a seperated git repository. <<.warning "They are interacted, so be carful">>
+* Remove the logic of encription of shaders from `SDK_mobile`;
+* Becarful of the size of libs. fully featured lib size would be in 10Mib;
+
+---
+
+!星期三(13)
+
+!! 搭建环境
+
+在参照[[这里 | https://confluence.sensetime.com/pages/viewpage.action?pageId=78094921]]的内容执行之后，发现一些新的问题：
+
+*　ssh生产的pub与pri key可能git不能正确找到其位置，需要执行：`ssh-add`
+
+
+!! 挂载远程文件夹与启动自执行
+
+```bash
+#1. mount remote folder to local:
+    $ sudo mkdir /mnt/nfs	# nfs可以替换成其他名字
+    $ sudo mount -t nfs 10.107.2.1:/shared/Ubuntu-16.04 /mnt/nfs 
+
+#2. Create soft link:
+    $ cd /usr/local
+    $ sudo ln -s /mnt/nfs toolchains
+
+#3. Change file content:
+    $ cd /etc
+    append `/bin/mount -t nfs 10.107.2.1:/shared/Ubuntu-16.04 /mnt/nfs` to `rc.local` file under etc folder;
+    append `source /usr/local/toolchains/profile` to `profile` file under etc folder;
+
+#4. Reboot
+
+#5. test ok?
+    $ cppbuild env
+```
+
+
+
+!! Jerry commnet:
+
+```bash
+export PATH=/usr/local/toolchains/bin:$PATH;
+```
+
+!! Some thing new
+;/etc/profile
+:环境变量相关的文件
+
+;/etc/rc.local
+:启动项内容，不能执行长期循环的任务，需要一次性完毕，最终返回`exit 0`，在`/etc/profile`文件之前执行
+
+---
+
+!星期二(12)
+
+!! 入职商汤
