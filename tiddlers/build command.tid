@@ -1,0 +1,16 @@
+created: 20191114073902220
+modified: 20191114074348989
+title: build command
+type: text/vnd.tiddlywiki
+
+
+! 构建命令：
+
+!! android　64bit
+```bash
+TARGET_OS=android TARGET_ARCH=aarch64 cppbuild dep --uploads=globals:globals.cmake --cfg=+license_online,+api_object_tracker,+eyeball_center,+eyeball_contour,+api_animal,+avatar,+api_avatar,+tongue,-api_ar,-body_keypoints,-body_contour,+api_makeup,+nv_to_rgba_texture
+```
+
+```bash
+TARGET_OS=android TARGET_ARCH=aarch64 cppbuild build --build-type=release --install
+```

@@ -1,5 +1,5 @@
 created: 20191114031311795
-modified: 20191114034301498
+modified: 20191114075810174
 tags: sensetime
 title: 2019-11-11_15
 type: text/vnd.tiddlywiki
@@ -7,9 +7,12 @@ type: text/vnd.tiddlywiki
 
 !星期四(14)
 
+!! Thoughts
+*全部include的头文件没有相对路径，仅仅是个文件名，这样实在不好定位文件的地方。
+
 !! 工作内容（未来一段时间）
 * Split `st3dlib` from `SDK_mobile` to a seperated git repository. <<.warning "They are interacted, so be carful">>
-* Remove the logic of encription of shaders from `SDK_mobile`;
+* Remove the logic of encryption of shaders from `SDK_mobile`;
 * Becarful of the size of libs. fully featured lib size would be in 10Mib;
 
 ---
@@ -45,6 +48,8 @@ type: text/vnd.tiddlywiki
     $ cppbuild env
 ```
 
+!! 构建命令
+[[查看这里|build command]]
 
 
 !! Jerry commnet:
