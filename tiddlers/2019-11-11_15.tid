@@ -1,11 +1,28 @@
 created: 20191114031311795
-modified: 20191114075810174
+modified: 20191115031610385
 tags: sensetime
 title: 2019-11-11_15
 type: text/vnd.tiddlywiki
 
 
+!星期五(15)
+
+!! Thoughts
+* st3dlib 抽象程度不高，里面参杂了业务逻辑；
+
+---
+
 !星期四(14)
+
+!! Summary
+今天看了下st3dlib这个库，学习了cppbuild的基本使用方法与流程，发现st3dlib虽然只引用了一个外部的utils.h头文件，但完全可以去掉不用（亦可正常编译）。需要将st3dlib拉出来的话不难，首先我需要会用cppbuild的高级用法。
+
+```
+cppbuild new <your-project-name>
+cppbuild dep : 拉取所有该工程依然的ｇｉｔ仓库到本地，拉取的版本号(sha)在第一次的时候就确定了。
+cppbuild build --build-type=release : 编译本地工程
+```
+
 
 !! Thoughts
 *全部include的头文件没有相对路径，仅仅是个文件名，这样实在不好定位文件的地方。
