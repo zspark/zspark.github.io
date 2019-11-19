@@ -1,0 +1,72 @@
+created: 20191118022819410
+modified: 20191118094957672
+tags: sensetime
+title: 2019-11-18_22
+type: text/vnd.tiddlywiki
+
+!星期五(22)
+
+
+---
+
+!星期四
+
+
+---
+
+!星期三(20)
+
+
+
+---
+
+!星期二
+
+---
+
+!星期一
+
+CMakeLists.txt中加上了``ADD_DEFINITIONNS(-DUSE_OPENGL)``之后，此前找不到的各个gl宏（GL_RGBA等）都可以找到了，但是出现新问题：说是``glew.h``中包含的``glu.h``文件找不到，我本地st_mobile工程确定不存在该文件，问问苏柳，发现其系统``/usr/include/``目录下有``GL/``文件夹，我却没有，想来是缺少一些ｏｐｅｎｇｌ相关的文件，ｓｔａｃｋｏｖｅｒｆｌｏｗ上说尝试这个：
+
+<<<
+sudo apt-get update<br>
+OpenGL: sudo apt-get install libglu1-mesa-dev freeglut3-dev mesa-common-dev
+<<<
+
+确实，运行过后，我有了``GL/``目录，里面也有``glu.h``文件了。
+
+
+!!st_mobile 信息
+android api level=21
+使用NDK生产的toolchain_r14b 64位aarch64 架构（armv7 为32位）
+
+
+!!出现的问题：
+
+```
+SENSETIME\zhaowei1@g105e1900914:~/workspace/st_mobile/src/st3dlib/build$ cmake -DCMAKE_TOOLCHAIN_FILE=../toolchain.cmake ../
+ The C compiler
+
+    "/usr/local/toolchains/android-ndk-r14b/android-aarch64//bin/clang"
+
+  is not able to compile a simple test program.
+
+  It fails with the following output:
+```
+当我尝试执行toolchain的时候，报错见上，可通过以下修复：
+
+<<<
+The common solution is to set before project():
+
+```
+set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
+```
+<<<https://stackoverflow.com/questions/53633705/cmake-the-c-compiler-is-not-able-to-compile-a-simple-test-program
+
+整体意思就是，交叉编译宿主机上一般不能执行目标机程序。
+
+
+!! cmake toolchain
+```
+cmake -DCMAKE_TOOLCHAIN_FILE=<path-to-your-file> ../
+```
