@@ -1,0 +1,23 @@
+created: 20191119084611791
+modified: 20191119084833961
+tags: language C++
+title: C++拾零
+type: text/vnd.tiddlywiki
+
+!! 最大／最小宏，有意思
+
+
+```cpp
+//Solution
+#define GENERIC_MAX(x, y) ((x) > (y) ? (x) : (y))
+
+#define ENSURE_int(i)   _Generic((i), int:   (i))
+#define ENSURE_float(f) _Generic((f), float: (f))
+
+
+#define MAX(type, x, y) \
+  (type)GENERIC_MAX(ENSURE_##type(x), ENSURE_##type(y))
+
+//Usage
+MAX(int, 2, 3)
+```

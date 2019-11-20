@@ -1,0 +1,19 @@
+created: 20191119023650869
+modified: 20191119023826127
+tags: sidelight
+title: Linux study note
+type: text/vnd.tiddlywiki
+
+!!添加路径到环境变量
+
+```sh
+export PATH=/usr/local/toolchains/bin:$PATH;
+```
+
+!!文件用途
+
+;/etc/profile
+:环境变量相关的文件
+
+;/etc/rc.local
+:启动项内容，不能执行长期循环的任务，需要一次性完毕，最终返回`exit 0`，在`/etc/profile`文件之前执行
