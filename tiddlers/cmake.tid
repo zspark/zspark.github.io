@@ -1,9 +1,8 @@
 created: 20191118024915290
-modified: 20191121080738682
+modified: 20191122110703643
 tags: sidelight
 title: cmake
 type: text/vnd.tiddlywiki
-
 
 !!ADD_DEFINITIONS
 ```cmake
@@ -87,6 +86,7 @@ ADD_LIBRARY(libname [SHARED|STATIC|MODULE][EXCLUDE_FROM_ALL]source1 source2 ... 
 
 
 !添加第三方静态库到工程，并生产本地工程动态库
+这里需要重点说明的是：''静态库的链接顺序是越基础的库，越要在后面链接''
 
 ```cmake
 SET(libname <third-party-lib-name>)

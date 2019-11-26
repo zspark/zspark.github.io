@@ -1,5 +1,5 @@
 created: 20191119023650869
-modified: 20191119023826127
+modified: 20191126054610851
 tags: sidelight
 title: Linux study note
 type: text/vnd.tiddlywiki
@@ -17,3 +17,13 @@ export PATH=/usr/local/toolchains/bin:$PATH;
 
 ;/etc/rc.local
 :启动项内容，不能执行长期循环的任务，需要一次性完毕，最终返回`exit 0`，在`/etc/profile`文件之前执行
+
+!! 开启点击dock按钮最大化最小化应用
+
+```bash
+#设置ｄｏｃｋ点击最小化（适合ubuntu1604版本）：
+gsettings set org.compiz.unityshell:/org/compiz/profiles/unity/plugins/unityshell/ launcher-minimize-window true
+
+#不同的ubuntu图形桌面使用的是不同的系统，1604应该是unity，如果是gnome桌面系统，可能是：
+gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
+```
