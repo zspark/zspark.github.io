@@ -1,5 +1,5 @@
 created: 20191118024915290
-modified: 20191122110703643
+modified: 20191127032145629
 tags: sidelight
 title: cmake
 type: text/vnd.tiddlywiki
@@ -86,13 +86,13 @@ ADD_LIBRARY(libname [SHARED|STATIC|MODULE][EXCLUDE_FROM_ALL]source1 source2 ... 
 
 
 !添加第三方静态库到工程，并生产本地工程动态库
-这里需要重点说明的是：''静态库的链接顺序是越基础的库，越要在后面链接''
+这里需要重点说明的是：''静态库的链接顺序是越基础的库，越要在后面链接''。查看[[这里|undefined reference to错误的解决方法]]
 
 ```cmake
 SET(libname <third-party-lib-name>)
 SET(dylibname "xx")
 ADD_LIBRARY(${libname} STATIC IMPORTED)
-SET_PROPERTY(TARGET ${libname} PROPERTY IMPORTED_LOCATION <path-to-lib>/lib${libname}.a)
+SET_TARGET_PROPERTIES(${libname} PROPERTY IMPORTED_LOCATION <path-to-lib>/lib${libname}.a)
 TARGET_LINK_LIBRARIES(${dylibname} ${libname})
 TARGET_INCLUDE_DIRECTORIES(${dylibname} PUBLIC <path-to-lib>)
 
