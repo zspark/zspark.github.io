@@ -1,0 +1,124 @@
+created: 20191207152630123
+modified: 20191207164832002
+tags: sidelight
+title: Setup Linux-like developing environment on Windows platform
+type: text/vnd.tiddlywiki
+
+
+记录一下在windows上搭建gnu开发环境的过程，虽然是windows平台，但不想使用MS相关的套件做开发，那么就看看windows下的gnu套件吧，这是我在工作中接触了Linux平台之后（个人此前断断续续有使用Ubuntu系统）的一个带有学习性质的决定，无它意思。
+
+我会记录两个方面，编译器与终端。
+
+
+!compiler - mingw-w64
+
+我对windows平台下使用gcc的经验比较少，记忆中第一个冒出来的是[[MinGW|http://mingw.org/]]（minimal gnu for windows），进入其官网发现待验证什么什么东西，没辙，向Google求救。发现MinGW有个后人名曰''[[mingw-w64|http://mingw-w64.org/doku.php]]''，不但能编译64位版本程序，而且编译器版本比较新，维护活跃，而MinGW基本没有再维护。
+
+我第一次下载的是个压缩包，但在我一顿猛如虎的操作之后，控制台就是发现不了编译器（当时怎么弄的记不清了，此处不赘述）。于是又下载了[[在线安装|https://sourceforge.net/projects/mingw-w64/files/latest/download]]版本的安装器''mingw-w64-install.exe''（938KiB），在选择了不同的版本及其另外几个选项后，真正的下载开始了。设置好环境变量，用powershell运行如下命令：
+
+```ps
+PS C:\xxxx> g++ -v
+// blablabla...
+gcc version 8.1.0 (x86_64-posix-seh-rev0, Built by MinGW-W64 project)
+```
+这就是说可以运行编译器了，赶紧写个HelloWorld测试一下吧：
+
+```cpp
+// helloworld.cpp
+#include <iostream>
+using namespace std;
+int main(int argc,char** argv){
+  printf("Hello World!");
+  return 0;
+}
+```
+
+```ps
+PS C:\xxxx> g++ .\helloworld.cpp -o out.exe
+PS C:\xxxx> .\out.exe
+Hello World!
+```
+成功编译并且运行，out.exe文件83KiB，使用编译器参数`-s -O1`之后是38KiB
+
+以上算是一个小段落，安装了mingw-w64，成功在微软家的powershell编译运行了HelloWorld程序。
+
+---
+
+
+!cmake
+为了项目的轻松部署与编译，选择使用[[cmake|https://cmake.org/]，我使用了最新的windows平台3.16.0版本，安装好后，powershell运行测试命令
+
+```ps
+PS C:\xxxx> cmake --version
+cmake version 3.16.0
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+```
+
+编写CMakeLists.txt脚本如下：
+
+```cmake
+CMAKE_MINIMUM_REQUIRED(version 2.6)
+PROJECT("test")
+ADD_EXECUTABLE("test" helloworld.cpp)
+```
+继续在powershell运行cmake尝试编译上面的helloworld.cpp源码
+
+```ps
+PS C:\xxxx> mkdir build
+PS C:\xxxx> cd build
+PS C:\xxxx> cmake -G "MinGW Makefiles" ..
+# -- some printed infos.
+PS C:\xxxx> make
+Scanning dependencies of target test
+[ 50%] Building CXX object CMakeFiles/test.dir/helloworld.cpp.obj
+[100%] Linking CXX executable test.exe
+[100%] Built target test
+```
+成功编译，也是83KiB的大小，继续在CMakeLists.txt中添加编译器参数，此后的文件大小是37KiB
+
+```cmake
+CMAKE_MINIMUM_REQUIRED(version 2.6)
+PROJECT("test")
+SET(CMAKE_CXX_FLAGS "-s -O1") #这是新增的
+ADD_EXECUTABLE("test" helloworld.cpp)
+```
+
+<<.warning "这里需要注意的是cmake命令的-G参数，可以通过''cmake -G''查看其它-G参数的内容（切记一定不要打错字，注意大小写），该参数具体的含义我尚未计较，大概的意思就是cmake需要知道它即将构建的工程文件是将要用哪个编译器去编译的，因为我下载的是mingw-w64的gnu编译器，所以指定了''MinGW Makefiles''内容，你总不能让cmake构建一个*.sln的visual studio工程，然后让gnu去编译吧，g++会一脸懵逼的。">>
+
+!!windows terminal
+
+
+!!cmder
+
+---
+
+!进入Linux-like的世界 - msys2
+
+!!mingw
+!!mingw-w64
+!!msys2 mingw-w64
+!!msys2 gcc
+
+!terminal
+MS家的CLI终端多受大家的诟病，确实体验与功能上相较Linux家族的terminal甚远，在我安装好了编译后，首先使用的windows的powershell，
+
+
+```bash
+rm -rf build
+mkdir -p build
+cd build
+cmake -G "MinGW Makefiles" ..  #如果windows平台直接安装cmake，注意-G参数
+make
+```
+!!powershell and windows terminal
+
+```powershell
+cmake -G "MinGW Makefiles" ..  #如果windows平台直接安装cmake，注意-G参数
+# -- some printed infos.
+make
+```
+
+ok，编译出来了HelloWorld.exe程序，大小83KiB
+
+
+
