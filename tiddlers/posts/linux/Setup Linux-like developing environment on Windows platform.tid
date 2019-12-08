@@ -1,6 +1,6 @@
 created: 20191207152630123
 creator: Jerry
-modified: 20191208092820109
+modified: 20191208101837843
 modifier: Jerry
 tags: linux
 title: Setup Linux-like developing environment on Windows platform
@@ -115,11 +115,11 @@ Server = http://downloads.sourceforge.net/project/msys2/REPOS/MINGW/x86_64
 Server = http://www2.futureware.at/~nickoe/msys2-mirror/x86_64/
 ```
 
->>>
+<<<
 MSYS2 is a software distro and building platform for Windows
 
 At its core is an independent rewrite of MSYS, based on modern Cygwin (POSIX compatibility layer) and MinGW-w64 with the aim of better interoperability with native Windows software. It provides a bash shell, Autotools, revision control systems and the like for building native Windows applications using MinGW-w64 toolchains.
->>>
+<<< https://www.msys2.org/
 
 然后是同步、更新软件源（至于pacman怎么使用，可[[查看这里|pacman]]）：
 
