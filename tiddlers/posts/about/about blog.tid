@@ -1,0 +1,15 @@
+created: 20190919192529698
+creator: Jerry
+icon: $:/core/images/quote
+modified: 20190919203045680
+modifier: Jerry
+tags: 
+title: about blog
+type: text/vnd.tiddlywiki
+
+<<.warning "博客正在整理中，刚从pmwiki转过来，一些语法、图片链接等都有变化">>
+
+
+这是一个普通的基于[[tiddlywiki|https://tiddlywiki.com]]的Blog，我希望自己能坚持记录下我在计算机科学中的学习与思考。
+
+Blog最早使用[[博客网|http://www.bokee.com/]]提供的博客系统（后来应该是关闭了该服务），然后记录、转载了一些乱七八糟的东西，后来购买了阿里云服务器搭建了[[Emlog|https://github.com/emlog/emlog]]小型博客系统，不过那已经是我踏入计算机科学后的事情了。再后来我使用[[Jekyll|https://jekyllrb.com/]]系统，再后来使用[[pmwiki|https://www.pmwiki.org/]]，直到现在用[[tiddlywiki|https://tiddlywiki.com]]，因为在用Jekyll与pmwiki期间有诸多不便，比如我到了公司或者其他人的电脑上，就不能随心在博客中记录，即便机主同意，也不是很方便就能搭建起来Jekyll平台，更何况还有写好后的提交问题，不再使用pmwiki是因为需要php服务，这些都是一个方面；从技术博客的基本要求来看，一般需要代码高亮、链接等，这些Jekyll与pmwiki虽说都可以完成，但需要花功夫搭建、构建，最后还要上传，但是在使用了tiddlywiki之后，发现记录是那么的随心所欲，是那么的方便，我便深深的爱上了tiddlywiki。
