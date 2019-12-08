@@ -1,6 +1,6 @@
 created: 20190911141719146
 creator: Jerry
-modified: 20191015053815705
+modified: 20191208093004833
 modifier: Jerry
 tags: [[Philosophy and thoughts]]
 title: 软件开发思考
@@ -80,3 +80,5 @@ type: text/vnd.tiddlywiki
 
 ! 魔法值引起的无数次时间损耗；
 virtualLayer 写成 vitural_layer
+
+TBC

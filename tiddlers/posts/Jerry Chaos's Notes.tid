@@ -1,11 +1,11 @@
 created: 20190824143034534
 creator: Jerry
 icon: $:/core/images/home-button
-modified: 20190919202836748
+modified: 20191208092111785
 modifier: Jerry
 title: Jerry Chaos's Notes
 type: text/vnd.tiddlywiki
 
-<<list-links "[tag[computer graphics]sort[title]]">>
+<<list-links "[tag[_toc_]sort[title]]">>
 
 <div class="tb5-fish">{{$:/.img/fish.svg}}</div>

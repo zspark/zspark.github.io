@@ -1,6 +1,6 @@
 created: 20190827180406813
 creator: Jerry
-modified: 20190919202704644
+modified: 20191208094150562
 modifier: Jerry
 tags: sidelight
 title: 正则表达式
@@ -9,15 +9,6 @@ type: text/vnd.tiddlywiki
 有人说会正则的程序员比较神秘，也有人说使用vim的程序员更加牛逼，于是我觉得自己好普通，因为我既会正则又熟练使用vim。 :)
 
 正则表达式可能对大部分初学程序的朋友而言是陌生的，因为用不到，用到了也有其他方法变通的解决，其次就是比较少见，实在需要的话也是网上搜搜或者请教前辈。网上有很多优秀的正则表达式讲解，有的非常不错，比如这篇。我主要说说以下几点，目的依然简单：我需要通过一字一字的记录来加强记忆与理解：
-
-* 说明
-* 转义
-* 重复
-* 括号
-* 引用
-* 分组
-* 定位
-* JS测试
 
 ! 说明
 
@@ -101,10 +92,6 @@ type: text/vnd.tiddlywiki
 
 ! JS测试
 
-请跳转到这里进行。
-
-[url1]:http://www.regexlab.com/zh/regref.htm
-
-[url2]:https://msdn.microsoft.com/zh-cn/library/ae5bf541(VS.80).aspx
-
-[url3]:http://tool.oschina.net/regex/
+http://www.regexlab.com/zh/regref.htm<br>
+https://msdn.microsoft.com/zh-cn/library/ae5bf541(VS.80).aspx<br>
+http://tool.oschina.net/regex/

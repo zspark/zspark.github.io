@@ -1,9 +1,10 @@
 created: 20191122065606264
-modified: 20191122070014651
-tags: sidelight excerpted
-title: undefined reference to错误的解决方法
+creator: Jerry
+modified: 20191208093243723
+modifier: Jerry
+tags: linux excerpted
+title: undefined reference to xx
 type: text/vnd.tiddlywiki
-
 
 //这篇文章解决了２天以来一直被undefined reference to 困扰的问题，文中加粗的部分是解决我问题的地方，感谢作者陈运文//
 

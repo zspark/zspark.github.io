@@ -1,9 +1,10 @@
 created: 20191207152630123
-modified: 20191208084000403
-tags: sidelight
+creator: Jerry
+modified: 20191208092820109
+modifier: Jerry
+tags: linux
 title: Setup Linux-like developing environment on Windows platform
 type: text/vnd.tiddlywiki
-
 
 记录一下在windows上搭建gnu开发环境的过程，虽然是windows平台，但不想使用MS相关的套件做开发，那么就看看windows下的gnu套件吧，这是我在工作中接触了Linux平台之后（个人此前断断续续有使用Ubuntu系统）的一个带有学习性质的决定，无它意思。
 
