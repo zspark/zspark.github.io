@@ -1,8 +1,65 @@
 created: 20191119084611791
-modified: 20191203102350083
+modified: 20191210113119329
 tags: language C++
 title: C++拾零
 type: text/vnd.tiddlywiki
+
+
+
+!! 模板
+模板函数，里面要用到具体的函数，但是我希望在一个逻辑里面能简单的使用一个方法得到，可以使用下面这样的写法：
+
+```cpp
+// Example program
+#include <iostream>
+
+class Json{
+    public:
+    int GetInt(){
+        return 1;
+    };
+    float GetFloat(){
+        return 2.0f;
+    };
+    bool GetBool(){
+        return true;
+    };
+    double GetDouble(){
+        return 3.0;
+    };
+};
+
+template <typename T>
+void GetValue(Json& j,T&);
+
+template<>
+void GetValue(Json& j,int& a){
+    a= j.GetInt();
+}
+template<>
+void GetValue(Json& j,float& a){
+    a= j.GetFloat();
+}
+template<>
+void GetValue(Json& j,bool& a){
+    a= j.GetBool();
+}
+template<>
+void GetValue(Json& j,double& a){
+    a= j.GetDouble();
+}
+
+int main()
+{ 
+  Json j;
+  int i=-1;  GetValue(j,i);
+  float f=-1.0f;  GetValue(j,f);
+  bool b=false;  GetValue(j,b);
+  double d=-1.0;  GetValue(j,d);
+  std::cout<<"Print:"<<i<<","<<f<<","<<b<<","<<d<<std::endl; //Print:1,2,1,3
+}
+```
+
 
 
 !!lock_guard
