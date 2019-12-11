@@ -1,10 +1,29 @@
 created: 20191119084611791
-modified: 20191210113119329
+modified: 20191211030629561
 tags: language C++
 title: C++拾零
 type: text/vnd.tiddlywiki
 
 
+
+!! 这个虽然是老生常谈的事情（ＲＡＩＩ），但事情应用起来确实很有味道：
+
+```cpp
+class Resource {
+  public:
+    explicit Resource(int bytes){
+      glGetIntegerv(GL_UNPACK_ALIGNMENT, &m_lastAlignedBytes);
+      glPixelStorei(GL_UNPACK_ALIGNMENT, bytes);
+    }
+    ~Resource(){
+      glPixelStorei(GL_UNPACK_ALIGNMENT, m_lastAlignedBytes);
+    }
+
+  private:
+    int m_lastAlignedBytes;
+};
+```
+局部空间构造一个Resource临时实例，空间出来后实例销毁，还原gl状态，多么的优美。
 
 !! 模板
 模板函数，里面要用到具体的函数，但是我希望在一个逻辑里面能简单的使用一个方法得到，可以使用下面这样的写法：
