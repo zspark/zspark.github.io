@@ -1,12 +1,13 @@
 created: 20191119084611791
-modified: 20191211030629561
+modified: 20191213052507081
 tags: language C++
 title: C++拾零
 type: text/vnd.tiddlywiki
 
 
+!! RAII
 
-!! 这个虽然是老生常谈的事情（ＲＡＩＩ），但事情应用起来确实很有味道：
+这个虽然是老生常谈的事情，但实际应用起来确实很有味道，仅仅了解会使用还不够，要灵活运用。
 
 ```cpp
 class Resource {
