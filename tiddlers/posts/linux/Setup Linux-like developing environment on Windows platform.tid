@@ -1,6 +1,6 @@
 created: 20191207152630123
 creator: Jerry
-modified: 20191208101837843
+modified: 20191214034300197
 modifier: Jerry
 tags: linux
 title: Setup Linux-like developing environment on Windows platform
@@ -202,6 +202,9 @@ make
 MS家的CLI终端多受大家的诟病，确实体验与功能上相较Linux家族的terminal甚远。我有程序要通过powershell编译，还有blog需要nodejs运行于powershell，还有其他一些东西开好几个终端。此前在Microsoft Store有看到过微软家的多开终端工具名曰''windows terminal''，用起来尚且可行，但在安装了msys2之后，它也要启动一个终端，在查看如何在windows terminal中添加msys2的启动时，想起了此前同事用的''[[cmder|https://cmder.net/]]''这么一个软件，一番查阅与学习之后，决定使用它了。
 
 在cmder -> settings -> Starup -> Tasks 配置项中，我们添加启动msys2的条目，新增command groups，配置以下启动命令（感谢网友提供）：<br>`-new_console:d:C:\msys64 set CHERE_INVOKING=1 & %MSYS2_ROOT%\usr\bin\bash.exe --login -i`<br>具体配置见下图（依然是网友提供）。
+
+<<.tip "如果你想启动msys2的mingw-w64，需要添加''MSYSTEM=MINGW64''到cmder中，注意放到bash.exe之前，如下示例：">>
+`-new_console:d:C:\msys64 set CHERE_INVOKING=1 & set "MSYSTEM=MINGW64" & %MSYS2_ROOT%\usr\bin\bash.exe --login -i`
 
 
 !总结
