@@ -1,6 +1,6 @@
 created: 20191118024915290
 creator: Jerry
-modified: 20191208093311043
+modified: 20191215121204790
 modifier: Jerry
 tags: sidelight
 title: cmake
@@ -87,7 +87,8 @@ ADD_LIBRARY(libname [SHARED|STATIC|MODULE][EXCLUDE_FROM_ALL]source1 source2 ... 
 * EXCLUDE_FROM_ALL 参数的意思是这个库不会被默认构建，除非有其他的组件依赖或者手工构建。
 
 
-!添加第三方静态库到工程，并生产本地工程动态库
+!添加库
+!!添加第三方静态库到工程，并生产本地工程动态库
 这里需要重点说明的是：''静态库的链接顺序是越基础的库，越要在后面链接''。查看[[这里|undefined reference to xx]]
 
 ```cmake
@@ -97,7 +98,12 @@ ADD_LIBRARY(${libname} STATIC IMPORTED)
 SET_TARGET_PROPERTIES(${libname} PROPERTY IMPORTED_LOCATION <path-to-lib>/lib${libname}.a)
 TARGET_LINK_LIBRARIES(${dylibname} ${libname})
 TARGET_INCLUDE_DIRECTORIES(${dylibname} PUBLIC <path-to-lib>)
-
 ```
 
+!!添加第三方动态库到工程
 
+```cmake
+LINK_DIRECTORIES(<path-to-lib>)
+ADD_EXECUTABLE(${libname} <some-cpp-files>)
+TARGET_LINK_LIBRARIES(${libname} -l<lib-name>)
+```

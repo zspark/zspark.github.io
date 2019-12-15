@@ -1,8 +1,72 @@
 created: 20191119084611791
-modified: 20191213052507081
+creator: Jerry
+modified: 20191215150555253
+modifier: Jerry
 tags: language C++
 title: C++拾零
 type: text/vnd.tiddlywiki
+
+
+!! 2019-12-15
+自定义命名空间下不要include标准库，否则会出现好多未定义。
+
+!! chrono
+
+```cpp
+std::chrono::milliseconds ms{3}; // 3 milliseconds
+// 6000 microseconds constructed from 3 milliseconds
+std::chrono::microseconds us = 2*ms;
+// 30Hz clock using fractional ticks
+std::chrono::duration<double, std::ratio<1, 30>> hz30(3.5);
+ 
+std::cout <<  "3 ms duration has " << ms.count() << " ticks\n"
+          <<  "6000 us duration has " << us.count() << " ticks\n"
+          <<  "3.5 30Hz duration has " << hz30.count() << " ticks\n";       
+```
+
+!!atomic
+```cpp
+// constructing atomics
+#include <iostream>       // std::cout
+#include <atomic>         // std::atomic, std::atomic_flag, ATOMIC_FLAG_INIT
+#include <thread>         // std::thread, std::this_thread::yield
+#include <vector>         // std::vector
+
+std::atomic<bool> ready (false);
+std::atomic_flag winner = ATOMIC_FLAG_INIT;
+
+void count1m (int id) {
+  while (!ready) { std::this_thread::yield(); }      // wait for the ready signal
+  for (volatile int i=0; i<1000000; ++i) {}          // go!, count to 1 million
+  if (!winner.test_and_set()) { std::cout << "thread #" << id << " won!\n"; }
+};
+
+int main ()
+{
+  std::vector<std::thread> threads;
+  std::cout << "spawning 10 threads that count to 1 million...\n";
+  for (int i=1; i<=10; ++i) threads.push_back(std::thread(count1m,i));
+  ready = true;
+  for (auto& th : threads) th.join();
+
+  return 0;
+}
+```
+
+!! gdb
+cont
+
+break
+
+info
+
+run
+
+list
+
+next
+
+step
 
 
 !! RAII
