@@ -1,0 +1,22 @@
+created: 20191216061433659
+modified: 20191216061511753
+tags: sidelight linux
+title: GDB
+type: text/vnd.tiddlywiki
+
+
+<<.warning "WIP">>
+!gdb
+cont
+
+break
+
+info
+
+run
+
+list
+
+next
+
+step

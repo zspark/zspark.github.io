@@ -1,11 +1,10 @@
 created: 20191119084611791
 creator: Jerry
-modified: 20191215150555253
+modified: 20191216061427887
 modifier: Jerry
 tags: language C++
 title: C++拾零
 type: text/vnd.tiddlywiki
-
 
 !! 2019-12-15
 自定义命名空间下不要include标准库，否则会出现好多未定义。
@@ -53,20 +52,6 @@ int main ()
 }
 ```
 
-!! gdb
-cont
-
-break
-
-info
-
-run
-
-list
-
-next
-
-step
 
 
 !! RAII
