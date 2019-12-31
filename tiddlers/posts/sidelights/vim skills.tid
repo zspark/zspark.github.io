@@ -1,8 +1,8 @@
 created: 20190831004808359
 creator: Jerry
-modified: 20191121044906842
+modified: 20191231080926728
 modifier: Jerry
-tags: excerpted
+tags: sidelight excerpted
 title: vim skills
 type: text/vnd.tiddlywiki
 
@@ -33,6 +33,8 @@ j：表示是否搜索完后定位到第一个匹配位置
 `:vimgrep /classA/gj ./*.c`
 
 查找的结果可以用`:copen`命令查看,在列表里,将光标移动至相应的位置,按回车就打开对应的文件了.
+
+<<.tip "可以直接使用vim代替vimgrep">>
 
 ! 使用ctrlp的配置：
 在使用ctrlp的时候，总是感觉查找的文件找不到，需要如下配置后才能更好的使用：

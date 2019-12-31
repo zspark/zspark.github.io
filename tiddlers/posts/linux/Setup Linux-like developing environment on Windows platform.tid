@@ -1,6 +1,6 @@
 created: 20191207152630123
 creator: Jerry
-modified: 20191214034300197
+modified: 20191231084042593
 modifier: Jerry
 tags: linux
 title: Setup Linux-like developing environment on Windows platform
@@ -47,7 +47,7 @@ Hello World!
 
 
 !cmake
-为了项目的轻松部署与编译，选择使用[[cmake|https://cmake.org/]，我使用了最新的windows平台3.16.0版本，安装好后，powershell运行测试命令
+为了项目的轻松部署与编译，选择使用[[cmake|https://cmake.org/]]，我使用了最新的windows平台3.16.0版本，安装好后，powershell运行测试命令
 
 ```ps
 PS C:\xxxx> cmake --version
