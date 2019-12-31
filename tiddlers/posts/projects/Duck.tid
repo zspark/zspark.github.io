@@ -1,9 +1,47 @@
 created: 20190827152338761
 creator: Jerry
-modified: 20190919182757937
+modified: 20191226054551872
 modifier: Jerry
 tags: Project
 title: Duck
 type: text/vnd.tiddlywiki
 
-等待补充
+```cpp
+template<typename T>
+class DKEngineTreeNode:public HSNode{
+    public:
+        DKObjectNode()=delete;
+        DKObjectNode(T object):m_ref_pEngineTree(<get-instance>),T(object){}
+        ~DKObjectNode(){m_ref_pEngineTree=nullptr;m_ref_pEngineTree=nullptr;}
+        bool AddSubNode(DKEngineTreeNode* node){// 参数要能接受所有全特化的DKEngineTreeNode实例
+            return m_ref_pEngineTree->Insert(this,node);
+        }
+        T GetBaseObject(){return m_ref_pBaseObject;};
+        const T GetBaseObject()const{return m_ref_pBaseObject;};
+    private:
+        HSForest* m_ref_pEngineTree{nullptr};
+        T m_ref_pBaseObject*{nullptr};
+};
+
+class DKCamera:public DKBaseObject{
+};
+
+class DKICamera{
+    private:
+        DKCamera* m_ref_pCamera{nullptr;}
+};
+
+template<typename T>class WrapperNode:public HSNode{
+    using WrapperNode<T> type_class;
+    public:
+    WrapperNode()=delete;
+    WrapperNode(const type_class& that){
+        m_ref_pBaseObject=that.m_ref_pBaseObject;
+    }
+    WrapperNode(T _p):m_ref_pBaseObject(_p){}
+    ~WrapperNode(){m_ref_pBaseObject=nullptr;}
+    T operator->(){return m_ref_pBaseObject;}
+    private:
+    T m_ref_pBaseObject;
+}
+```
