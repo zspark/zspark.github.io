@@ -1,8 +1,8 @@
 author: Nancy
 created: 20200102070827756
 creator: Nancy
-modified: 20200102131246885
-modifier: Nancy
+modified: 20200102143657301
+modifier: Jerry
 tags: essay C++
 title: C++面试遇到的问题
 type: text/vnd.tiddlywiki
@@ -95,10 +95,10 @@ short c;
 
 结构体的大小问题在求解的时候要注意对齐：
 
-A：对齐值为：1 。大小为：3
-B：对齐值为：4 。 大小为：4+2+2 = 8（第一个4为int，第二个4为char 和 short ，要空余1个）
-C：对齐值为：4。大小为：4+4+4 = 12（第一个为char ，空余3个，第二个为int ，第三个为char 空余3个）
-D：指定对齐值为：2（使用了#pragma pack(2)） 。大小为2+4+2 = 8。（第一个char，空余1个，第二个为int ，4个，第3个位char，空余1个）。
+*A：对齐值为：1 。大小为：3
+*B：对齐值为：4 。 大小为：4+2+2 = 8（第一个4为int，第二个4为char 和 short ，要空余1个）
+*C：对齐值为：4。大小为：4+4+4 = 12（第一个为char ，空余3个，第二个为int ，第三个为char 空余3个）
+*D：指定对齐值为：2（使用了#pragma pack(2)） 。大小为2+4+2 = 8。（第一个char，空余1个，第二个为int ，4个，第3个位char，空余1个）。
 
 !! 二、按位运算符
 未完待续....
