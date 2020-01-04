@@ -1,7 +1,7 @@
 author: Nancy
 created: 20200102070827756
 creator: Nancy
-modified: 20200103065142190
+modified: 20200104090420108
 modifier: Nancy
 tags: essay C++
 title: C++面试遇到的问题
@@ -160,12 +160,12 @@ value是要移动的整数值，shift是要移动的位数。腾出的位用0填
 
 1&1=1;
 <<<
-*按位运算符的替代表示( | 符号由于和表格符冲突用or代替)
+*按位运算符的替代表示
 |!标准表示|!替代表示|
 | & |bitand|
 | &= |and_eq|
-| or |bitor|
-| or= |or_eq|
+| $$\text{\textbar}$$ |bitor|
+| $$\text{\textbar}$$= |or_eq|
 | ~ |compl|
 | ^ |xor|
 | ^= |xor_eq|
