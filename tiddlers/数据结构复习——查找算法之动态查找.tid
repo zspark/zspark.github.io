@@ -1,7 +1,7 @@
 author: Nancy
 created: 20200104093936138
 creator: Nancy
-modified: 20200104161233643
+modified: 20200105152825065
 modifier: Nancy
 tags: essay
 title: 数据结构复习——查找算法之动态查找
@@ -77,4 +77,94 @@ bool InsertBST(BiTree *T, int key)
 		return FALSE;   // 树中已有关键字相同的结点，不再插入
 	}
 }
+
+void InOrder(BiTree T)    //先序遍历
+{
+  if(T != NULL)
+  {
+    InOrder(T->lchild);
+    cout<<" "<<T->data<<" ";
+    InOrder(T->rchild);
+  }
+}
+
+int main()
+{
+  BiTree T = new BiTNode();
+  T->data = 3;
+  T->lchild = T->rchild = NULL;
+
+  for(int i = 0; i < 5; i++)
+  {
+    insertBST(&T,i);
+  }
+  cout<<T->data<<endl;
+  InOrder(T);
+  cout<<endl;
+  return 0;
+}
+
+```
+
+以上方法用到二级指针，比较复杂，jerry老师帮我简化了下
+
+```cpp
+#include <iostream>
+using namespace std;
+
+struct BiTree
+{
+    int data{-1};
+    BiTree* lchild{nullptr};
+    BiTree* rchild{nullptr};
+};
+
+/**
+ * search the given BiTree t, and return a node which has the value of data.
+ * if return nullptr ,means there is already a node which has the value of data in the tree.
+ */
+
+BiTree* SearchAndInsert(BiTree* t, int data)
+{
+    if(t == nullptr)
+    {
+        BiTree* _t = new BiTree();
+        _t->data = data;
+        return _t;
+    }
+    if(t->data > data)
+    {
+        Bitree* tmp = SearchAndInsert(t->lchild,data);
+        if(tmp) t->lchild = tmp;
+    }
+    else if(t->data < data)
+    {
+        BiTree* tmp = SearchAndInsert(t->rchild,data);
+        if(tmp) t->rchild = tmp;
+    }
+    return nullptr;
+}
+
+void Print(BiTree* t){
+	if(t==nullptr)return;
+	Print(t->lChild);
+	cout<<t->data<<",";
+	Print(t->rChild);
+};
+
+int main(int argc, char** argv){
+
+	BiTree* tree=new BiTree();
+	tree->data=50;
+
+	for(int i=0;i<100;++i){
+		BiTree* t=SearchAndInsert(tree,i);
+	}
+
+	Print(tree);
+
+	return 0;
+}
+
+
 ```
