@@ -1,6 +1,6 @@
 created: 20190827152338761
 creator: Jerry
-modified: 20191226054551872
+modified: 20200106074301072
 modifier: Jerry
 tags: Project
 title: Duck
@@ -9,39 +9,102 @@ type: text/vnd.tiddlywiki
 ```cpp
 template<typename T>
 class DKEngineTreeNode:public HSNode{
-    public:
-        DKObjectNode()=delete;
-        DKObjectNode(T object):m_ref_pEngineTree(<get-instance>),T(object){}
-        ~DKObjectNode(){m_ref_pEngineTree=nullptr;m_ref_pEngineTree=nullptr;}
-        bool AddSubNode(DKEngineTreeNode* node){// 参数要能接受所有全特化的DKEngineTreeNode实例
-            return m_ref_pEngineTree->Insert(this,node);
-        }
-        T GetBaseObject(){return m_ref_pBaseObject;};
-        const T GetBaseObject()const{return m_ref_pBaseObject;};
-    private:
-        HSForest* m_ref_pEngineTree{nullptr};
-        T m_ref_pBaseObject*{nullptr};
+	public:
+		DKEngineTreeNode()=delete;
+		DKEngineTreeNode(T object):m_ref_pEngineTree(<get-instance>),m_ref_pBaseObject(object){}
+
+		/// sharing the same m_ref_pBaseObject;
+		DKEngineTreeNode(DKEngineTreeNode<T>* p):m_ref_pEngineTree(p->m_ref_pBaseObject),m_ref_pBaseObject(p->m_ref_pBaseObject){
+			// copy m_matrixToParent;
+			// copy description;
+			m_sDisplayName=p->m_sDisplayName+"_cloned";
+		}
+		virtual ~DKEngineTreeNode(){m_ref_pEngineTree=nullptr;m_ref_pEngineTree=nullptr;}
+		bool AddSubNode(DKEngineTreeNode* node){// 参数要能接受所有全特化的DKEngineTreeNode实例
+			return m_ref_pEngineTree->Insert(this,node);
+		}
+		T GetBaseObject(){return m_ref_pBaseObject;};
+		const T GetBaseObject()const{return m_ref_pBaseObject;};
+		const dkchar* GetDisplayName()const{return m_sName.c_str();};
+		const dkchar* GetDisplayDescription()const{return m_sDisplayDescription.c_str();};
+		const glm::Matrix4x4& GetMatrixToParent()const{return m_matrixToParent;}
+		bool FetchMatrixToWorld(glm::Matrix4x4*)const;
+	protected:
+		HSForest* m_ref_pEngineTree{nullptr};
+		glm::Matrix4x4 m_matrixToParent;// init to uniform matrix;
+		dkstr m_sDisplayName{""};
+		dkstr m_sDisplayDescription{""};
+		T m_ref_pBaseObject{nullptr};
 };
 
+class DKNonCopiable{
+	public:
+		DKNonCopiable(const DKNonCopiable&)=delete;
+		DKNonCopiable* operater=(const DKNonCopiable&)=delete;
+};
+
+class DKFilm final:public DKBaseObject,public DKNonCopiable{
+	public:
+		DKFilm();
+		DKFilm(dkuint,dkuint);
+		~DKFilm();
+		void SetSize(dkuint,dkuint);//zero means keep old value;
+
+	private:
+		dkuint w{0u};
+		dkuint h{0u};
+		DKBuffer* m_pBufferOutput{nullptr};
+		//.. other buffers;
+}
+
 class DKCamera:public DKBaseObject{
+	public:
+		void SetFOV(float);
+		void SetNearPlaneDistance(float);
+		void SetFarPlaneDistance(float);
+		void SetFilmSize(dkuint,dkuint);//zero means keep old value;
+
+	private:
+		void _CalculateMatrix();// after calculation, then send matrix to render;
+		float m_fFOV{60.0f};
+		float m_fNearPlaneDistance{0.01f};
+		float m_fFarPlaneDistance{10000000.0f};
+		glm::Matrix4x4 m_matrixProjection;
+};
+
+class DKCameraInstance:public DKEngineTreeNode<DKCamera*>{
+	public:
+		DKCameraInstance()=delete;
+		DKCameraInstance(DKCameraInstance*);
+		~DKCameraInstance();
+	public:
+		void SetPosition(float x,float y,float z);
+		void SetLookAt(float x,float y,float z);
+};
+
+DKCameraInstance::DKCameraInstance(DKCameraInstance* p):DKEngineTreeNode<DKCamera*>(p)
+}
+
+class DKIFilm{
+	public:
+		void dkSetSize(dkuint w,dkuint h){
+			m_ref_pFilm->SetSize(w,h);
+			m_ref_pCamera->SetFilmSize(w,h);
+		}
+
+	private:
+		DKFilm* m_ref_pFilm{nullptr;}
+		DKICamera* m_ref_pCamera{nullptr};
 };
 
 class DKICamera{
-    private:
-        DKCamera* m_ref_pCamera{nullptr;}
-};
+	public:
+		bool dkSetVisibility(bool);
+		void dkSetFilmSize(dkuint w,dkuint h){
+			m_ref_pCamera->SetFilmSize(w,h);
+		}
 
-template<typename T>class WrapperNode:public HSNode{
-    using WrapperNode<T> type_class;
-    public:
-    WrapperNode()=delete;
-    WrapperNode(const type_class& that){
-        m_ref_pBaseObject=that.m_ref_pBaseObject;
-    }
-    WrapperNode(T _p):m_ref_pBaseObject(_p){}
-    ~WrapperNode(){m_ref_pBaseObject=nullptr;}
-    T operator->(){return m_ref_pBaseObject;}
-    private:
-    T m_ref_pBaseObject;
-}
+	private:
+		DKCamera* m_ref_pCamera{nullptr;}
+};
 ```

@@ -1,8 +1,8 @@
 author: Nancy
 created: 20200104093936138
 creator: Nancy
-modified: 20200105152825065
-modifier: Nancy
+modified: 20200106025003521
+modifier: Jerry
 tags: essay
 title: 数据结构复习——查找算法之动态查找
 type: text/vnd.tiddlywiki
@@ -119,11 +119,6 @@ struct BiTree
     BiTree* rchild{nullptr};
 };
 
-/**
- * search the given BiTree t, and return a node which has the value of data.
- * if return nullptr ,means there is already a node which has the value of data in the tree.
- */
-
 BiTree* SearchAndInsert(BiTree* t, int data)
 {
     if(t == nullptr)
@@ -158,13 +153,11 @@ int main(int argc, char** argv){
 	tree->data=50;
 
 	for(int i=0;i<100;++i){
-		BiTree* t=SearchAndInsert(tree,i);
+		SearchAndInsert(tree,i);
 	}
 
 	Print(tree);
 
 	return 0;
 }
-
-
 ```
