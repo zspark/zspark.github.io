@@ -1,7 +1,7 @@
 author: Nancy
 created: 20200102070827756
 creator: Nancy
-modified: 20200104093835712
+modified: 20200107132030530
 modifier: Nancy
 tags: essay C++
 title: C++面试遇到的问题
@@ -303,3 +303,68 @@ int main()
 
 !!四、字符串问题
 strlen与sizeof的区别：strlen不算‘\0’
+
+!!五、类和结构的区别
+
+<<<
+类和结构很像，C++对结构进行了拓展，使之具有与类相同的特性。它们之间唯一的区别是：
+
+结构的默认访问类型是public ,而类为private。
+<<<
+
+!!六、类的构造函数和析构函数
+
+<<<
+初始化类的对象与常规的初始化语法不同，由于类的部分数据的访问状态是私有的，这意味着程序不能直接访问数据成员，只能通过成员函数来访问数据成员，因此需要设计合理的构造函数。
+
+默认构造函数是在未提供显式初始值时，用来创建对象的构造函数。如果没有提供任何构造函数，C++将自动提供默认构造函数，它是默认构造函数的隐式版本。默认构造函数没有参数，因为声明中不包含值。
+
+```cpp
+student::student(){}
+```
+
+当且仅当没有定义任何构造函数时，编译器才会提供默认构造函数。为类定义了构造函数后，必须自己为它提供默认构造函数。
+<<<
+
+例如：
+
+```cpp
+#include <iostream>
+using namespace std;
+class student
+{
+  private:
+    std::string m_sName;
+    int m_nGrade;
+    int m_nClass
+  public:
+      stock()
+      {
+        m_sName = "no name";
+        m_nGrade = 0;
+        m_nClass = 0;
+      }    //默认构造函数一种写法
+      //stock(string name = "no name", int grade = 0, int class = 0);   //另一种默认构造函数的写法，给已有构造函数的所有参数提供默认值
+      stock(string name, int grade, int nClass)
+      {
+        m_sName = name;
+        if(grade<0)
+        {
+          cerr<<"Number of m_nGrade can't be nagetive; "<<name<<" 's grade set to 0.\n";
+          m_nGrade = 0;
+        }
+        else n_nGrade = grade;
+        if(nClass<0)
+        {
+          cerr<<"Number of m_nClass can't be nagetive; "<<name<" 's Class set to 0.\n";
+          m_nClass = 0;
+        }
+        else m_nClass = nClass;
+      }       //自定构造函数
+};
+
+```
+
+六、链表逆序
+
+七、内存分配方法P117
