@@ -1,6 +1,6 @@
 created: 20190818121911567
 creator: Jerry
-modified: 20190827151248376
+modified: 20200109160108948
 modifier: Jerry
 tags: [[interactive computer graphics]]
 title: 2 图形学编程 (interactive computer graphics)
@@ -181,7 +181,7 @@ void main(){
 }
 ```
 
-现在新的问题出现了，如何映射用in修饰的变量与主程序中的数据？比如我有2个in修饰的上游变量，主程序也有2个数据提交，现在谁对应谁？什么类型？（因为OpenGL与GLSL是不同的语言，vec4可能OpenGL中没有，就算有也可是名字一样罢了）；还好OpenGL提供了获取GLSL代码中部分变量的函数glGetAttribLocation()，见下程序，我们获取了在顶点着色器中的变量vPosition，将它映射到了loc下，紧接着我们开启对这个变量内容的写入，第三条glVertexAttribPointer()函数是指明了我们传给着色器vec4变量的内容的格式。[参见官网函数手册][url4]FIXME
+现在新的问题出现了，如何映射用in修饰的变量与主程序中的数据？比如我有2个in修饰的上游变量，主程序也有2个数据提交，现在谁对应谁？什么类型？（因为OpenGL与GLSL是不同的语言，vec4可能OpenGL中没有，就算有也可是名字一样罢了）；还好OpenGL提供了获取GLSL代码中部分变量的函数[[glGetAttribLocation]]，见下程序，我们获取了在顶点着色器中的变量vPosition，将它映射到了loc下，紧接着我们开启对这个变量内容的写入，第三条glVertexAttribPointer()函数是指明了我们传给着色器vec4变量的内容的格式。[参见官网函数手册][url4]FIXME
 
 ```
 GLuint loc = glGetAttribLocation(program, "vPosition");
@@ -219,7 +219,7 @@ void main(){
 
 !!!编译、连接着色器程序
 
-当程序员写完了各种着色器程序后，不能光在外部保存个文件或者在程序里面写完放着。我们需要编译每个着色器代码，然后连接到被称为程序对象(Program Object)的对象上才能使用。把着色器连接到程序对象的过程中会产生一个表，着色器中的变量名会与表中的索引相关联。首先利用glCreateShader(shader_type)方法创建一个着色器对象(Shader Object)，然后将着色器代码传入对象中，紧接着编译它（编译可能会失败，可以通过glGetShaderiv()获取一些失败的信息，方便调试）。编译成功后将着色器对象附加到程序对象上，当全部你想要的着色器对象附加完成后，就可以尝试将程序对象连接到主程序中。
+当程序员写完了各种着色器程序后，不能光在外部保存个文件或者在程序里面写完放着。我们需要编译每个着色器代码，然后连接到被称为程序对象(Program Object)的对象上才能使用。把着色器连接到程序对象的过程中会产生一个表，着色器中的变量名会与表中的索引相关联。首先利用[[glCreateShader]](shader_type)方法创建一个着色器对象(Shader Object)，然后将着色器代码传入对象中，紧接着编译它（编译可能会失败，可以通过glGetShaderiv()获取一些失败的信息，方便调试）。编译成功后将着色器对象附加到程序对象上，当全部你想要的着色器对象附加完成后，就可以尝试将程序对象连接到主程序中。
 
 
 

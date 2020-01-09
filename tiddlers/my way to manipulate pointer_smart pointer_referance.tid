@@ -1,0 +1,17 @@
+created: 20200109034603953
+creator: Jerry
+modified: 20200109054008727
+modifier: Jerry
+tags: [[Philosophy and thoughts]]
+title: my way to manipulate pointer/smart pointer/referance
+type: text/vnd.tiddlywiki
+
+!pointer
+
+如果我在函数内需要对实例进行修改，我会传入指针
+
+!smart pointer
+需要共享的资源
+
+!referance
+需要使用其内容，但不需要修改其内容

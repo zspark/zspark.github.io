@@ -1,7 +1,7 @@
 author: Nancy
 created: 20200102070827756
 creator: Nancy
-modified: 20200107132030530
+modified: 20200109123550666
 modifier: Nancy
 tags: essay C++
 title: C++面试遇到的问题
@@ -368,3 +368,7 @@ class student
 六、链表逆序
 
 七、内存分配方法P117
+
+八、一个棋盘，从左上角走到右下角有几条路径。
+
+九、文件的读写

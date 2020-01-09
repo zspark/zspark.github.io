@@ -1,10 +1,22 @@
 created: 20191118024915290
 creator: Jerry
-modified: 20191215121204790
+modified: 20200108145025840
 modifier: Jerry
 tags: sidelight
 title: cmake
 type: text/vnd.tiddlywiki
+
+
+!cmake外部添加参数
+!!CMAKE_INSTALL_PREFIX
+
+CMAKE_INSTALL_PREFIX变量类似于configure脚本的 –prefix，常见的使用方法看起来是这个样子：
+
+```cmake
+cmake -DCMAKE_INSTALL_PREFIX=/usr .
+```
+
+
 
 !!ADD_DEFINITIONS
 ```cmake

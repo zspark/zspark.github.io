@@ -1,6 +1,6 @@
 created: 20191203050258228
 creator: Jerry
-modified: 20191213054922531
+modified: 20200109034541743
 modifier: Jerry
 tags: [[Philosophy and thoughts]]
 title: My programming philosophy 2019
@@ -102,7 +102,7 @@ void func(bool b){
 ```
 
 
-!延迟信息的覆盖（丢失）
+!延迟信息的覆盖/丢失
 
 我觉得在编程的时候，无论何种情况下，都需要尽可能的保留更多的信息，直到客观情况导致不能保留才清理信息，这种尽可能长时间保留信息的思想对于信息的保全/逻辑的清晰很有必要，请看下面的例子：
 
@@ -124,6 +124,7 @@ void SetIndex(int a){
 }
 ```
 
-
+! 我对指针/智能指针/引用的使用环境
+see:[[my way to manipulate pointer/smart pointer/referance]]
 
  ¶ 
