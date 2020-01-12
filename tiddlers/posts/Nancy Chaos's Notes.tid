@@ -1,9 +1,11 @@
 created: 20190901094838859
 creator: Nancy
-modified: 20200103065240043
-modifier: Nancy
+icon: $:/core/images/home-button
+modified: 20200112051134350
+modifier: Jerry
 title: Nancy Chaos's Notes
 type: text/vnd.tiddlywiki
 
 <<list-links "[tag[essay]sort[title]]">>
+
 

@@ -1,10 +1,31 @@
 created: 20191119084611791
 creator: Jerry
-modified: 20191216061427887
+modified: 20200111082936656
 modifier: Jerry
 tags: language C++
 title: C++拾零
 type: text/vnd.tiddlywiki
+
+
+直接使用map[index]获取到的元素，不能在const函数中，它应该不是const类型，可以使用at函数，举例：
+
+```cpp
+std::map m;
+const int GetSize(int offset)const{
+  return m[offset]->GetSize();
+};
+```
+
+the correct way is :
+
+```cpp
+std::map m;
+const int GetSize(int offset)const{
+  return m.at(offset)->GetSize();
+};
+```
+
+
 
 !! 2019-12-15
 自定义命名空间下不要include标准库，否则会出现好多未定义。
