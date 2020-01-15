@@ -1,11 +1,19 @@
 created: 20191119084611791
 creator: Jerry
-modified: 20200111082936656
+modified: 20200112052354970
 modifier: Jerry
 tags: language C++
 title: C++拾零
 type: text/vnd.tiddlywiki
 
+
+!!2020-01-12
+```cpp
+STGenAvatarManager* manager = new(std::nothrow) STGenAvatarManager();
+```
+
+
+!!2020-01-11
 
 直接使用map[index]获取到的元素，不能在const函数中，它应该不是const类型，可以使用at函数，举例：
 

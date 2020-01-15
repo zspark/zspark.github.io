@@ -1,11 +1,10 @@
 created: 20200107035402740
 creator: Jerry
-modified: 20200107035536813
+modified: 20200115024244840
 modifier: Jerry
 tags: linux excerpted
 title: shell script
 type: text/vnd.tiddlywiki
-
 
 ! 判断
 !!1 字符串判断
@@ -36,6 +35,9 @@ type: text/vnd.tiddlywiki
 * -b file　　　　　文件为块特殊文件为真
 * -s file　　　　　文件大小非0时为真
 * -t file　　　　　当文件描述符(默认为1)指定的设备为终端时为真
+* -z：判断制定的变量是否存在值
+* -L:判断制定的是否为符号链接
+！：测试条件的否定符号  
 
 !!4 复杂逻辑判断
 
