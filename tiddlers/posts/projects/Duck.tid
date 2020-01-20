@@ -1,12 +1,94 @@
 created: 20190827152338761
 creator: Jerry
-modified: 20200115124432492
+modified: 20200119123635955
 modifier: Jerry
 tags: Project
 title: Duck
 type: text/vnd.tiddlywiki
 
 ```cpp
+
+/**
+ * API demo
+ */
+bool Init(){
+	dkengine::Init();/// some basic and global config settings;
+	DKContent* C=dkengine::CreateContent();
+	DKScene* s=new DKScene(); C->dkAddScene(s);
+	DKCamera* c=new DKOthroCamera();
+	c->dkSetViewDistance(0.1f,1000000.f);
+	c->dkSetFocusLength(0.0f);
+	DKInstanceCamera* i1=s->dkAddCamera(c,100,100);
+	DKInstanceCamera* i2=s->dkAddCamera(c,100,100);
+	DKInstanceCamera* i3=s->dkAddCamera(c,100,100);
+	i1->dkTranslate(0.f,1.f,0.f);
+	i2->dkRotate(0.f,10.f,0.f);
+	i3->dkScale(1.f,1.3f,1.f);
+
+	DKEntity* e=new DKEntity();
+	DKGeometry* g1=new DKMesh();
+	DKGeometry* g2=new DKMesh();
+	DKMaterial* m=new DKMaterial();
+	m->dkSetDiffuseColor(1.f,1.f,0.9f);
+	m->dkSetFrenial(min,max,exponent);
+	DKInstance* i4=e->dkAddGeometry(g1);
+	DKInstance* i5=e->dkAddGeometry(g2);
+	DKInstance* i6=s->dkAddEntity(e);
+	i6->dkSetMaterial(m);
+
+
+	DKGeometryGroup* ggrp=new DKGeometryGroup();
+	DKInstance* i100=ggrp->dkAddSubGeometry(g1);
+	DKInstance* i101=ggrp->dkAddSubGeometry(g2);
+	DKEntity* e2=new DKEntity();
+	DKInstance* i102=e2->dkAddGeometry(ggrp);
+	i102->dkTranslate(0.1f,0.0f,0.f);
+	s->dkAddEntity(e2);/// you can ignore returned DKInstance,just to use it's default settings;
+
+
+
+
+	DKLight* l=new DKPointLight();
+	l->dkSetColor(1.f,0.f,0.f,1.f);
+	l->dkSetIntensity(10.f);
+
+	i4->dkSetDisplayName("head.mesh");
+	i4->dkSetVisibility(false);
+	i5->dkSetDisplayName("body.mesh");
+	i5->dkSetDisplayDescription("This is xxxxx");
+	i6->dkSetMaterial(xxxxxx);
+	DKInstance* i7=s->dkAddLight(l);
+	s->dkRemoveLight(i7);
+	return true;
+}
+
+bool Deinit(){
+	delete s,c,e,g1,g2,m,l;
+	dkengine::DestroyContent(C);
+	dkengine::Deinit();
+}
+
+void Loop(){
+	dkengine::Loop();
+}
+```
+
+
+
+```cpp
+
+#ifndef M_IMPLEMENT
+#define M_IMPLEMENT public
+#endif
+
+#ifndef M_INTERFACE
+#define M_INTERFACE class
+#endif
+
+#ifndef M_DELETE_COPY_ASSIGN_CTOR(cls)
+#define M_DELETE_COPY_ASSIGN_CTOR(cls) cls(const cls&)=delete; cls* operater=(const cls&)=delete;
+#endif
+
 template<typename T>
 struct tpl_dkrange{
 	T min;
@@ -15,14 +97,46 @@ struct tpl_dkrange{
 
 using tpl_dkrange<float> dkfrange01
 
-
-class DKNonCopiable{
-	public:
-		DKNonCopiable(const DKNonCopiable&)=delete;
-		DKNonCopiable* operater=(const DKNonCopiable&)=delete;
+enum EObjectType{
+	OBJECT_TYPE_CAMERA,
+	OBJECT_TYPE_LIGHT,
+	OBJECT_TYPE_GEOMETRY,
+	OBJECT_TYPE_MATERIAL,
+	OBJECT_TYPE_SCENE,
 };
 
-class DKFilm final:public DKBaseObject,public DKNonCopiable{
+M_INTERFACE DKUpdatable{
+	virtual void Update()=0;
+};
+
+M_INTERFACE DKLinkable{
+	/**
+	 * check weather *this can accept node;
+	 */
+	virtual bool IsLinkNodeAcceptable()const=0;
+	/**
+	 * create a node which holds the instance of *this
+	 */
+	virtual HSNode* CreateLinkNode()=0;
+	virtual void DestroyLinkNode(HSNode*)=0;
+	/**
+	 * link the given node to *this;
+	 */
+	virtual bool Link(HSNode*)=0;
+	/**
+	 * unlink the given node from *this;
+	 */
+	virtual bool Unlink(HSNode*)=0;
+};
+
+class DKLinkNode:public HSNode{
+	public:
+		DKLinkable* upstream{nullptr};
+		DKLinkable* downstream{nullptr};
+};
+
+class DKFilm final:public DKBaseObject{
+	M_DELETE_COPY_ASSIGN_CTOR(DKFilm)
 	public:
 		DKFilm();
 		DKFilm(dkuint,dkuint);
@@ -37,7 +151,7 @@ class DKFilm final:public DKBaseObject,public DKNonCopiable{
 		//.. other buffers;
 }
 
-class DKBaseCamera:public DKBaseObject{
+class DKBaseCamera:public DKBaseObject,M_IMPLEMENT DKUpdatable{
 	public:
 		void SetFOV(float);
 		void SetNearPlaneDistance(float);
@@ -50,6 +164,9 @@ class DKBaseCamera:public DKBaseObject{
 			}
 		}
 
+	public:
+		void Update()override;
+
 	protected:
 		virtual void _CalcMatrix()=0;
 	private:
@@ -60,9 +177,30 @@ class DKBaseCamera:public DKBaseObject{
 		DKFilm* m_ref_pFilm{nullptr};
 };
 
-class DKOthroCamera:public DKBaseCamera{
+class DKOthroCamera:public DKBaseCamera,M_IMPLEMENT DKLinkable{
 	public:
 		void _CalcMatrix()override;
+
+		HSNode* CreateLinkNode()override{
+			return new tpl_DKBaseNode<DKOthroCamera*>(this);
+		}
+		void DestroyLinkNode(HSNode* n)override{
+			//TODO:Jerry: check n's concrete type, then delete;
+			M_SAFE_DELETE(n);
+		};
+		bool Link(HSNode*)override{}
+		bool Unlink(HSNode* _n)override{return false;}
+		bool IsLinkNodeAcceptable()const override{return false;}
+};
+
+class DKOthroCameraInstance{
+	M_DELETE_COPY_ASSIGN_CTOR(DKOthroCameraInstance)
+	private:
+		DKOthroCameraInstance();
+		~DKOthroCameraInstance();
+	public:
+	private:
+		DKLinkNode* m_ref_pNode{nullptr};
 };
 
 class DKBaseLight:public DKBaseObject{
@@ -77,7 +215,7 @@ class DKBaseLight:public DKBaseObject{
 		float m_fGammaCorrection{0.45f};
 }
 
-class DKPointLight:public DKBaseLight{
+class DKPointLight:public DKBaseLight, M_IMPLEMENT DKLinkable{
 	public:
 		DKPointLight();
 		~DKPointLight();
@@ -102,6 +240,19 @@ class DKGeometry:public DKBaseObject{
 	private:
 }
 
+class DKGeometryGroup:public DKGeometry{
+	public:
+		void AddSubGeometry(DKGeometry*);
+		void RemoveSubGeometry(DKGeometry*);
+		void Clear(bool deleteall);
+		const int GetCount()const;
+	private:
+		HSNode* m_rootNode;
+};
+
+class DKMesh:public DKGeometry{}
+class DKSphere:public DKGeometry{}
+
 class DKPointSet:public DKGeometry{
 	public:
 		DKPointSet();
@@ -124,7 +275,41 @@ class DKEntity final:public DKBaseObject{
 	private:
 }
 
-class DKScene final:public DKBaseObject{
+class DKScene final:public DKBaseObject,M_IMPLEMENT DKLinkable,M_IMPLEMENT DKUpdatable{
+	M_DELETE_COPY_ASSIGN_CTOR(DKFilm)
+	public:
+		void Update()override;
+		HSNode* CreateLinkNode()override{
+			if(!m_pLinkNode)m_pLinkNode=new tpl_DKBaseNode<DKScene*>(this);
+			return m_pLinkNode;
+		}
+		void DestroyLinkNode(HSNode*)override{
+			M_SAFE_DELETE(m_pLinkNode);
+		};
+		bool Link(HSNode* n)override{
+			EObjectType type;//TODO:How to get type??
+			bool _r{true};
+			switch(type){
+				case EObjectType::OBJECT_TYPE_CAMERA:
+					m_tree.Insert(n,&m_cameraNode,xxx);
+					break;
+				case EObjectType::OBJECT_TYPE_LIGHT:
+					m_tree.Insert(n,&m_lightNode,xxx);
+					break;
+				case EObjectType::OBJECT_TYPE_GEOMETRY:
+					m_tree.Insert(n,&m_geometryNode,xxx);
+					break;
+				default:
+					_r=false;
+					E_LOG_ERROR("WTF",0);
+			}
+			return _r;
+		}
+		bool Unlink(HSNode* n)override{
+			return m_tree.Remove(n);
+		}
+		bool IsLinkNodeAcceptable()const override{return true;}
+
 	public:
 		void AddEntity(DKEntity*);
 		void RemoveEntity(DKEntity*);
@@ -132,69 +317,91 @@ class DKScene final:public DKBaseObject{
 		void RemoveLight(DKBaseLight*);
 		void AddCamera(DKBaseCamera*);
 		void RemoveCamera(DKBaseCamera*);
+
+	private:
+		void _Init(){
+			m_tree.Insert(&m_lightNode,nullptr,xx);
+			m_tree.Insert(&m_cameraNode,nullptr,xx);
+			m_tree.Insert(&m_geometryNode,nullptr,xx);
+		}
+		void _Deinit(){
+			m_tree.Remove(&m_lightNode);
+			m_tree.Remove(&m_cameraNode);
+			m_tree.Remove(&m_geometryNode);
+		}
+
+	private:
+		tpl_DKBaseNode<DKScene*>* m_pLinkNode{nullptr};
+		HSNode m_lightNode;
+		HSNode m_cameraNode;
+		HSNode m_geometryNode;
+		HSHierarchicalTree m_tree;
 };
 
 template<typename T>
 class tpl_DKBaseNode:public HSNode{
+		tpl_DKBaseNode(const tpl_DKBaseNode<T>& ptr)=delete;
+		tpl_DKBaseNode<T>* operator=(const tpl_DKBaseNode<T>&)=delete;
 	public:
-		tpl_DKBaseNode(){
-			m_ptrBaseObject.reset(new T());
-		}
-		tpl_DKBaseNode(const tpl_DKBaseNode<T>& ptr):m_ptrBaseObject(ptr.m_ptrBaseObject){
-		}
-		virtual ~tpl_DKBaseNode();
-		tpl_DKBaseNode& operater=(const tpl_DKBaseNode&)=delete;
-		void Update(){
-			m_ptrBaseObject.Update();
-		}
-		shared_ptr<T> GetBaseObject(){return m_ptrBaseObject;};
-		const shared_ptr<T>& GetBaseObject()const{return m_ptrBaseObject;};
+		tpl_DKBaseNode(T i): m_ref_pBaseObject(i){}
+		virtual ~tpl_DKBaseNode(){m_ref_pBaseObject=nullptr;};
+		T GetBaseObject(){return m_ref_pBaseObject;};
+		const T& GetBaseObject()const{return m_ref_pBaseObject;};
 	private:
-		shared_ptr<T> m_ptrBaseObject;
+		T m_ref_pBaseObject{nullptr};
 };
 
-template<typename T>
-class tpl_DKBaseNode_rawpointer final:public HSNode{
+class DKUpdatableNode final:public HSNode{
+		DKUpdatableNode()=delete;
 	public:
-		tpl_DKBaseNode_rawpointer()=delete;
-		tpl_DKBaseNode_rawpointer(const tpl_DKBaseNode_rawpointer<T>&);
-		~tpl_DKBaseNode_rawpointer();
-		inline T GetBaseObject(){return m_ref_pBaseObject;}	
-		inline const T GetBaseObject()const{return m_ref_pBaseObject;}	
+		DKUpdatableNode(DKUpdatable* i):m_ref_pBaseObject(i){}
+		~DKUpdatableNode(){m_ref_pBaseObject=nullptr;}
+		void Update(){ m_ref_pBaseObject->Update(); }
 	private:
-	T m_ref_pBaseObject{nullptr};
+		DKUpdatable* m_ref_pBaseObject{nullptr};
 }
 
 template<typename T>
-class DKEngineTreeNode:public tpl_DKBaseNode<T>{
+class tpl_DKInstance:public HSNode{
+	tpl_DKInstance(const tpl_DKInstance<T>& ptr)=delete;
+	tpl_DKInstance<T>* operator=(const tpl_DKInstance<T>&)=delete;
 	public:
-		DKEngineTreeNode();
-
-		/// sharing the same m_ptrBaseObject;
-		DKEngineTreeNode(DKEngineTreeNode<T>* p):tpl_DKBaseNode(p){
-			//TODO:Jerry: clone ctor.
-			// copy m_matrixToParent;
-			// copy description;
-			m_sDisplayName=p->m_sDisplayName+"_cloned";
-		}
-		virtual ~DKEngineTreeNode();
-
-	public:
-		const dkchar* GetDisplayName()const{return m_sName.c_str();};
-		const dkchar* GetDisplayDescription()const{return m_sDisplayDescription.c_str();};
+		T GetAPIObject(){return m_ref_pAPIObject;};
+		const T& GetAPIObject()const{return m_ref_pAPIObject;};
 		const glm::Matrix4x4& GetMatrixToParent()const{return m_matrixToParent;}
+		void Translate(dkfloat x,dkfloat y,dkfloat z);
+		void Translate(const dkf3& t);
+		void Scale(dkfloat s);
+		void Scale(dkfloat x,dkfloat y,dkfloat z);
+		void Scale(const dkf3& s);
+		void Rotate(dkfloat r);
+		void Rotate(dkfloat x,dkfloat y,dkfloat z);
+		void Rotate(const dkf3& r);
+		void ResetSRT();
 
 	protected:
 		glm::Matrix4x4 m_matrixToParent;// init to uniform matrix;
-		dkstr m_sDisplayName{""};
-		dkstr m_sDisplayDescription{""};
+
+	private:
+		tpl_DKInstance();
+		virtual ~tpl_DKInstance();
+		T m_ref_pAPIObject{nullptr};
 };
 
+class DKInstanceCamera:public tpl_DKInstance<DKBaseCamera*>{
+	public:
+
+	private:
+		DKFilm* m_ref_pFilm{nullptr};
+};
+
+typedef tpl_DKInstance<DKBaseCamera*> DKInstanceCamera;
+
+/*
 template<typename T>
 class DKReferenceNode:public HSNode{
 	public:
-		DKReferenceNode()=delete;
-		DKReferenceNode* operater=(const DKReferenceNode&)=delete;
+		M_DELETE_COPY_ASSIGN_CTOR(DKReferenceNode)
 		DKReferenceNode(T);
 		~DKReferenceNode(){
 			m_ref_pReferancedNode=nullptr;
@@ -204,9 +411,10 @@ class DKReferenceNode:public HSNode{
 	private:
 		T m_ref_pReferencedNode{nullptr};
 };
+*/
 
 
-class DKCameraNode:public DKEngineTreeNode<DKCamera*>{
+class DKCameraNode:public tpl_DKInstance<DKCamera*>{
 	public:
 		DKCameraNode()=delete;
 		DKCameraNode(DKCameraNode*);
@@ -217,9 +425,6 @@ class DKCameraNode:public DKEngineTreeNode<DKCamera*>{
 	private:
 		void _CalculateMatrix();// after calculation, then send matrix to render;
 };
-
-DKCameraNode::DKCameraNode(DKCameraNode* p):DKEngineTreeNode<DKCamera*>(p)
-}
 
 class DKEngineKernel final{
 	public:
@@ -244,11 +449,14 @@ class DKEngineKernel final{
 			/// 1. update-once nodes;
 			_tmp=m_tree.Travers(&m_nodeUpdateOnce,true);
 			while(_tmp){
-				tpl_DKBaseNode_rawpointer<
+				DKUpdatableNode* _n=static_cast<DKUpdatableNode*>(_tmp);
+				_n->Update();
 				_tmp=m_tree.Travers(&m_nodeUpdateOnce,false);
 			}
 
 			/// 2. delete once nodes;
+			m_tree.RemoveChildren(m_nodeUpdateOnce);
+
 			/// 1. update-per... nodes;
 			/// 3. render scenes
 		}
@@ -259,4 +467,114 @@ class DKEngineKernel final{
 		HSNode m_nodeUpdatePermanent;
 		HSNode m_nodeScenes;
 };
+
+class DKObjectsLinkageController final:public tpl_Singleton<DKObjectsLinkageController>{
+	public:
+		/**
+		 * link `from` as a child of `to`
+		 // * if `to` is nullptr, menas link to root
+		 */
+		bool Link(DKLinkable* from,DKLinkable* to){
+			if(to->IsLinkNodeAcceptable()){
+				HSNode* _n=from->CreateLinkNode();
+				to->Link(_n);
+				m_mapLinkage[to].push_back(_n);
+				return true;
+			}else{
+				M_LOG_WARN("you should pass an link-node acceptable DKLinkable instance to second parametar!",0);
+				return false;
+			}
+		}
+
+		bool Unlink(DKLinkable* from,DKLinkable* to){
+			std::vector<HSNode*>& _vec=m_mapLinkage[to];
+		}
+
+	private:
+		void Init()override;
+		void Deinit()override{
+			///TODO:Jerry:delete all nodes;
+			m_mapLinkage.clear();
+		}
+
+	private:
+		std::map<DKLinkable*,std::vector<HSNode*>> m_mapLinkage;
+		HSHierarchicalTree* m_ref_pEngineTree;
+};
+
+
+
+
+
+
+
+/**
+ * API usage
+ */
+
+// user case #1
+DKCamera* c=new DKOthroCamera();
+DKScene* s1=new DKScene();
+s1->dkAddCamera(c);
+DKScene* s2=new DKScene();
+s2->dkAddCamera(c);/// share one camera `c`;
+delete s2;/// delete `s2` but not `c`, `c` will still been used in `s1`;
+delete s1;/// delete `s1` but not `c`, because `c` is down-stream user created object, should be deleted there.
+delete c;/// delete `c`;
+
+// user case #2
+// same above;
+delete c;/// delete `c`, `s1` and `s2` will have no camera obtained.
+delete s2;/// delete `s2` ;
+delete s1;/// delete `s1` ;
+
+// user case #3
+DKCamera* c=new DKOthroCamera();
+DKScene* s1=new DKScene();
+DKScene* s2=new DKScene();
+DKInstance* i1=s1->dkAddCamera(c);
+DKInstance* i2=s2->dkAddCamera(c);/// share one camera `c`;
+s1->dkRemoveInstance(i1);/// remove one instance of `c` from `s1`, `c` is not deleted;
+s1->dkRemoveInstance(i111);/// remove one instance of some other type from `s1`;
+
+// user case #4
+DKScene* s=new DKScene();
+DKEntity* e=new DKEntity();
+DKGeometry* g1=new DKMesh();
+DKGeometry* g2=new DKMesh();
+DKMaterial* m=new DKMaterial();
+e->dkSetMaterial(m);
+e->dkAddGeometry(g1);
+e->dkAddGeometry(g2);// `g1` and `g2` share same material `m`;
+s->dkAddEntity(e);
+
+// user case #5
+DKEntity* e=new DKEntity();
+DKMaterial* m1=new DKMaterial();
+DKMaterial* m2=new DKMaterial();
+e->dkSetMaterial(m1);/// set `m1` to `e`;
+e->dkSetMaterial(m2);/// replace `m1` with `m2`, one entity use one material at a time;
+
+// user case #6
+DKGroup=new DKGroup();
+DKCamera* c=new DKOthroCamera();
+g->dkAddMember(c);
+g->dkSetMatrix(m);
+DKScene* s=new DKScene();
+s->dkAddGroup(g);
+
+// user case #7
+DKScene* s=new DKScene();
+s->dkAddCamera(new DKOthroCamera());
+s->dkAddCamera(new DKOthroCamera());
+s->dkAddCamera(new DKOthroCamera());
+delete s;/// the above three DKOthroCameras will not deleted, memory leak, be carful.!!
+
+// user case #8
+DKCamera* c=new DKOthroCamera();
+DKScene* s=new DKScene();
+DKInstance* i1=s->dkAddCamera(c);
+DKInstance* i2=s->dkAddCamera(c);
+DKInstance* i3=s->dkAddCamera(c);/// add the same camera but returns a totally different instance;
+s->dkRemoveInstance(i1);
 ```

@@ -1,0 +1,59 @@
+created: 20200119142630000
+creator: Nancy
+modified: 20200119154408267
+modifier: Nancy
+tags: essay C++
+title: C++virtual
+type: text/vnd.tiddlywiki
+
+面试遇到虚函数的题，被面试官问蒙了，啊好菜，这是基础要记牢
+
+```cpp
+#include<iostream>
+using namespace std;
+
+class A
+{
+public:
+	void foo(){ cout<<1<<endl; }
+	virtual print(){ cout<<2<<endl; }
+};
+
+class B : public A
+{
+public:
+	void foo(){ cout<<3<<endl; }
+	virtual print(){ cout<<4<<endl; }
+};
+
+int main()
+{
+	A a;
+	A *p;
+	p = &a;
+	p->foo();
+	p->print();
+	B b;
+	p = &b;
+	p->foo();
+	p->print();
+	B *q;
+	q = &b;
+	q->foo();
+	q->print();
+	return 0;
+}
+
+/*
+输出结果：
+1
+2
+1
+4
+3
+4
+Press any key to continue
+
+*/
+```
+
