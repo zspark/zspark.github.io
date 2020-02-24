@@ -5,18 +5,32 @@ created: 20190823153358725
 creator: Jerry
 footer: The title of the tiddler containing the icon associated with a tiddler
 from-version: 5.1.25
-modified: 20200112073640486
-modifier: Nancy
+modified: 20200220053401025
+modifier: Jerry
 tags: Optix
 title: test
 type: text/vnd.tiddlywiki
 
+
+! a serilizer lib
+official website: [[msgpack|https://msgpack.org/]]
+
+
+
+! pipe line in tables
 |hello|world|
 |a|b|
 |c|&brvbar;|
 |d|&#124;|
 
+st comfile
 
+```sh
+$ TARGET_OS=windows TARGET_ARCH=x86_64 cppbuild dep --uploads=globals:globals.cmake "--cfg=+api_gen_avatar,+attribute_face_feature,+face_track_240,+eyeball_center,+eyeball_contour,-tongue,-figure_segment,-track_hand,-api_ar,+body_keypoints,-body_contour,-api_beautify,+api_face_attribute,-api_filter,-api_sticker,-beautify,-face_action,-face_exchange,+body_3d,+face_skin_estimator,+threadpool"
+
+
+TARGET_OS=windows TARGET_ARCH=x86_64 cppbuild build --build-type=release
+```
 
 
 使用.gitattributes : https://help.github.com/en/github/using-git/configuring-git-to-handle-line-endings

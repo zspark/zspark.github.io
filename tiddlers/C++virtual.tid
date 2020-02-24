@@ -1,12 +1,14 @@
 created: 20200119142630000
 creator: Nancy
-modified: 20200119154408267
+modified: 20200205014327857
 modifier: Nancy
 tags: essay C++
 title: C++virtual
 type: text/vnd.tiddlywiki
 
 面试遇到虚函数的题，被面试官问蒙了，啊好菜，这是基础要记牢
+
+<<.tip "Jerry updated at 2020-01-21:<br>注意区别重写(override)、重载(overload)、覆盖(mask OR hide)三者的区别。">>
 
 ```cpp
 #include<iostream>
@@ -22,22 +24,22 @@ public:
 class B : public A
 {
 public:
-	void foo(){ cout<<3<<endl; }
-	virtual print(){ cout<<4<<endl; }
+	void foo(){ cout<<3<<endl; } ///覆盖了父类的同名函数;
+	virtual print(){ cout<<4<<endl; }///重写了父类的实现;
 };
 
 int main()
 {
-	A a;
-	A *p;
+	A a;     //父类的实例
+	A *p;   //父类的指针p
 	p = &a;
 	p->foo();
 	p->print();
-	B b;
-	p = &b;
-	p->foo();
-	p->print();
-	B *q;
+	B b;    //子类的实例
+	p = &b;   
+	p->foo();     //此处由于指针类型是父类的，所以调用的是父类的foo()
+	p->print();   //由于在父类中声明了print()为虚函数，故调用子类的print()
+	B *q;   //子类的指针q
 	q = &b;
 	q->foo();
 	q->print();

@@ -1,16 +1,18 @@
 created: 20200110102711813
 creator: Nancy
-modified: 20200112121858321
+modified: 20200220143201661
 modifier: Nancy
 tags: C++ essay
 title: C++review—string
 type: text/vnd.tiddlywiki
 
+<<.warning "Jerry:<br>Please concentrate on containers of C++11 standard">>
+
 !string类
 string类是由头文件string支持的（注意，头文件string.h和cstirng支持对C-风格字符串进行操纵的C库字符串函数，但不支持string类）。
 
 !!构造字符串
-使用构造函数时都进行了简化，即隐藏了这样一个事实：string实际上是模板具体化basic_string`<char>`的一个typedef，同时省略了内存管理相关的参数。size_type是一个依赖于实现的整型，是在头文件string中定义的。string类将string::npos定义为字符串的最大长度，通常为unsigned int的最大值。另外，表格中使用缩写NBTS(null-terminated string)来表示以空字符结束的字符串——传统的C字符串。
+使用构造函数时都进行了简化，即隐藏了这样一个事实：string实际上是模板具体化basic_string`<char>`的一个typedef，同时省略了内存管理相关的参数。size_type是一个依赖于实现的整型，是在头文件string中定义的。''string类将string::npos定义为字符串的最大长度，通常为unsigned int的最大值''。另外，表格中使用缩写NBTS(null-terminated string)来表示以空字符结束的字符串——传统的C字符串。
 
 |string类的构造函数|c
 |string(const char *s) |>|将string对象初始化为s指向的NBTS |
@@ -118,3 +120,17 @@ if(snake1 == snake3)  // operator<(const string &, const char *)
 if(snake3 != snake2)  // operator<(const char *, const string &)
 ...
 ```
+
+*确定字符串长度
+>size()和length()成员函数都返回字符串中的字符数：
+
+```cpp
+if(snak1.length() == snake2.size())
+    cout << "Both strings have the same length.\n";
+```
+
+<<.tip "为什么两个函数完成相同任务呢？length()成员来自较早版本的string类，而size()是为提供STL兼容性而添加的。">>
+
+*以多种不同的方式在字符串中搜索给定的子字符串或字符。
+>例如：重载的 find()、rfind()、find_first_od()、find_last_of()、find_first_not_of()和find_last_not_of() 等方法。具体用法参照C++Primer Plus(第六版) p662
+

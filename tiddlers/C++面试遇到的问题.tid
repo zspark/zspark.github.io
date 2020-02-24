@@ -1,11 +1,27 @@
 author: Nancy
 created: 20200102070827756
 creator: Nancy
-modified: 20200114135412528
+modified: 20200205015513793
 modifier: Nancy
 tags: essay C++
 title: C++面试遇到的问题
 type: text/vnd.tiddlywiki
+
+!!!索引
+
+>>>
+#结构体求大小问题
+#按位运算符
+#两个栈拼成一个队列
+#字符串问题
+#类和结构的区别
+#类的构造函数和析构函数
+#内存分配方法
+#一个棋盘，从左上角走到右下角有几条路径。---待补充
+#文件的读写---待补充
+#vector操作注意
+#链表逆序---待补充
+>>>
 
 !! 一、结构体求大小问题
 ```cpp
@@ -52,9 +68,9 @@ struct stu1
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;实际上，由于存储变量时地址对齐的要求，编译器在编译程序时会遵循两条原则：
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 一、结构体变量中成员的偏移量必须是成员大小的整数倍（0被认为是任何数的整数倍） 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1、结构体变量中成员的偏移量必须是成员大小的整数倍（0被认为是任何数的整数倍） 
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;二、结构体大小必须是所有成员大小的整数倍
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、结构体大小必须是所有成员大小的整数倍
 
 
 !!!对齐参数：
@@ -411,8 +427,6 @@ class student
 
 ```
 
-!!!六、链表逆序
-
 !!!七、内存分配方法
 
 根据用于分配内存的方法，C++有3种管理内存的方式：自动存储(栈)、静态存储和动态存储(有时也叫做自由存储空间或堆)。
@@ -483,3 +497,6 @@ int main(){
 }
 
 ```
+
+
+!!!十一、链表逆序

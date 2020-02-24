@@ -1,11 +1,23 @@
 created: 20191119084611791
 creator: Jerry
-modified: 20200112052354970
+modified: 20200221110259421
 modifier: Jerry
 tags: language C++
 title: C++拾零
 type: text/vnd.tiddlywiki
 
+
+!!2020-02-21
+size_t 类型定义在cstddef头文件中，该文件是C标准库的头文件stddef.h的C++版。''它是一个与机器相关的unsigned类型''，其大小足以保证存储内存中对象的大小。
+
+
+!!2020-02-08
+```cpp
+int a = 10;
+auto au_a = a;//自动类型推断，au_a为int类型
+cout << typeid(au_a).name() << endl;
+// -> int
+```
 
 !!2020-01-12
 ```cpp
